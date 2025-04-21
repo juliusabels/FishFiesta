@@ -1,0 +1,7 @@
+monitor_skin.png
+size: 1024, 1024
+repeat: none
+monitor
+  rotate: false
+  xy: 0, 0
+  size: 614, 543

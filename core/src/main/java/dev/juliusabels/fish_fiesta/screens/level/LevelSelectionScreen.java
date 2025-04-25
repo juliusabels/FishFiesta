@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
 import dev.juliusabels.fish_fiesta.screens.MainMenuScreen;
+import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
 
 public class LevelSelectionScreen extends FFBaseScreen {
@@ -21,15 +22,19 @@ public class LevelSelectionScreen extends FFBaseScreen {
     }
 
     private void showExitDialog() {
-        exitDialog.show(
-            // Continue action
-            () -> {
-                // Do nothing, continue playing
+        exitDialog.showButtons(
+            new DialogButton("Continue") {
+                @Override
+                public void run() {
+                    //Do nothing
+                }
             },
-            // Exit action
-            () -> {
-                //TODO safe game state here later
-                game.setScreen(new MainMenuScreen(game));
+            new DialogButton("Exit") {
+                @Override
+                public void run() {
+                    //TODO safe game state here later
+                    game.setScreen(new MainMenuScreen(game));
+                }
             }
         );
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
 import dev.juliusabels.fish_fiesta.screens.MainMenuScreen;
+import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
 
 public class LevelScreen extends FFBaseScreen {
@@ -15,17 +16,21 @@ public class LevelScreen extends FFBaseScreen {
         exitDialog = new DialogOverlay(game, stage);
     }
 
-    //TODO For level screen we want 'Continue', 'resign' (back to level selection), 'exit' (to main menu)
+    //TODO For level screen we want continue playing, exit to level selection, safe level state, restart level
     private void showExitDialog() {
-        exitDialog.show(
-            // Continue action
-            () -> {
-                // Do nothing, continue playing
+        exitDialog.showButtons(
+            new DialogButton("Continue") {
+                @Override
+                public void run() {
+                    //Do nothing
+                }
             },
-            // Exit action
-            () -> {
-                //TODO safe game state here later
-                game.setScreen(new LevelSelectionScreen(game));
+            new DialogButton("Exit") {
+                @Override
+                public void run() {
+                    //TODO safe game state here later
+                    game.setScreen(new LevelSelectionScreen(game));
+                }
             }
         );
     }

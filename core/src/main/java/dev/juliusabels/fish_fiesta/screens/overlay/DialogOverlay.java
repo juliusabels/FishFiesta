@@ -33,10 +33,9 @@ public class DialogOverlay {
         stage.addActor(overlayTable);
     }
 
-    public void show(Runnable continueAction, Runnable exitAction) {
+    public void showButtons(DialogButton... buttons) {
         // Create dialog box
         Table dialogBox = new Table();
-        //dialogBox.setBackground(game.getResourceHandler().getMonitorSkin().getDrawable("dialog_bg"));
         dialogBox.pad(20);
 
         // Create buttons
@@ -44,30 +43,21 @@ public class DialogOverlay {
             game.getResourceHandler().getMonitorSkin().getDrawable("menu_button"),
             game.getResourceHandler().getMonitorSkin().getDrawable("menu_button-pressed"),
             game.getResourceHandler().getMonitorSkin().getDrawable("menu_button-hovered"),
-            2.5F
+            2.0F
         );
 
-        TextButton continueButton = font.createButton("Resume", buttonStyle);
-        continueButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                hide();
-                if (continueAction != null) continueAction.run();
-            }
-        });
-
-        TextButton exitButton = font.createButton("Exit", buttonStyle);
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                hide();
-                if (exitAction != null) exitAction.run();
-            }
-        });
-
-        // Add buttons to dialog
-        dialogBox.add(continueButton).pad(10).fillX().row();
-        dialogBox.add(exitButton).pad(10).fillX();
+        for (DialogButton button : buttons) {
+            TextButton textButton = font.createButton(button.getName(), buttonStyle);
+            textButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    hide();
+                    button.run();
+                }
+            });
+            // Add button to dialog
+            dialogBox.add(textButton).pad(10).fillX().row();
+        }
 
         // Add dialog to overlay
         overlayTable.clear();

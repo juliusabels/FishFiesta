@@ -5,3 +5,23 @@ monitor
   rotate: false
   xy: 0, 0
   size: 614, 543
+menu_button
+    rotate:false
+    xy: 614, 0
+    size: 164, 60
+menu_button-hovered
+    rotate: false
+    xy: 614, 64
+    size: 164, 60
+menu_button-pressed
+    rotate: false
+    xy: 614, 128
+    size: 164, 60
+white
+    rotate: false
+    xy: 614, 188
+    size: 16, 16
+dialog_bg
+    rotate: false
+    xy: 614, 188
+    size: 16, 16

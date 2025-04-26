@@ -1,5 +1,6 @@
 package dev.juliusabels.fish_fiesta.game;
 
+import dev.juliusabels.fish_fiesta.game.features.SizeCategory;
 import lombok.Getter;
 
 @Getter
@@ -33,12 +34,5 @@ public final class CreatureSize {
 
     public int getAverageSize() {
         return (rangeStart + rangeEnd) / 2;
-    }
-
-    public enum SizeCategory {
-        SMALL,
-        MEDIUM,
-        BIG,
-        UNDEFINED
     }
 }

@@ -1,0 +1,9 @@
+{
+  "conditions": {
+    "WATER_TYPE": "FRESH",
+    "WATER_SUBTYPE": "CORAL_REEF",
+    "TEMPERATURE": "WARM",
+    "SIZE_CATEGORY": "MEDIUM"
+  },
+  "fishIDs": ["clownfish", "yellow_tang", "moorish_idol"]
+}

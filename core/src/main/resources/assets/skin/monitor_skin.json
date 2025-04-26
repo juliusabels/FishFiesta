@@ -1,2 +1,8 @@
 {
+  "ScrollPaneStyle": {
+    "default": {
+      "vScroll": "scrollbar-vertical",
+      "vScrollKnob": "scrollbar-vertical-knob"
+    }
+  }
 }

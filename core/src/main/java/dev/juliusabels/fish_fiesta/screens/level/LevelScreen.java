@@ -10,9 +10,11 @@ import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
 
 public class LevelScreen extends FFBaseScreen {
     private DialogOverlay exitDialog;
+    private String id;
 
-    public LevelScreen(FishFiestaGame game) {
+    public LevelScreen(FishFiestaGame game, String id) {
         super(game);
+        this.id = id;
         exitDialog = new DialogOverlay(game, stage);
     }
 

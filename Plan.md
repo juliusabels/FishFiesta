@@ -28,5 +28,47 @@ Layout:
 
 ---
 
+In the Fish Fiesta game, you are the gatekeeper of several fish parties. You receive a list of conditions that guests must meet to enter the party room. A small window displays a fish, and you must check your journal to verify if the fish meets the guest list conditions. You can then choose to either accept or decline the fish. 
 
-     
+You have 3 lives. If you decline a fish that should be allowed into the party or accept a fish that shouldn't, you lose a life. A level represents a fish party, each with a set guest list and a list of fish IDs attempting to enter. 
+
+In the level selection screen, you can see which levels are completed and which ones can be played. This screen also displays how many hearts the player lost in each level. However, to optimize performance, only the level ID, completion status, and lives lost are loaded here. The full level data (e.g., guest list) is loaded only when a level is selected.
+
+Within a level, you can view the guest list conditions and start the shift. When the shift begins, the first fish ID from the list is used to load the first fish. Fish textures are loaded using their IDs, which are mapped to skins in an atlas. This allows for easy retrieval of drawable textures.
+
+Fishes are represented by the `WaterCreature` class. The game should allow saving the state of a level so players can resume later. Level progress should also be displayed in the level selection screen. Levels are defined via JSON, while fishes can be registered in code.
+
+---
+
+## Room Conditions
+A room can only have one condition per category (most of the time). Meaning a room _can not_ be warm and cold or deepsea and coast. It _can_ be warm and deepsea tho. (even though this wouldn't make much sense)
+
+1. Temperature
+   - Warm
+   - Cold
+   - Medium
+2. Water Type
+   - Salt
+   - Fresh
+3. Water-subtype
+   - Deepsea
+   - Coast
+   - Open Ocean
+   - Coral Reef
+   - Lake
+   - River
+   - Kelp Forrest
+4. Served Food
+   - TODO later
+5. Size
+   - Big
+   - Medium
+   - Small
+6. Lifespan
+   - TODO Later
+7. Eating habbit (?)
+8. Schooling
+
+## Fish Features
+The fish has the same conditions as represented above. However here they represent fish features/behaviors.
+Additionally, fish can have multiple features from one category (sometimes). Meaning they _can_ be salt and freshwater fish.

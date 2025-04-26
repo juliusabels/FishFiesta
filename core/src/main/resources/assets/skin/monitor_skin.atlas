@@ -25,3 +25,24 @@ dialog_bg
     rotate: false
     xy: 614, 188
     size: 16, 16
+folder
+    rotate: false
+    xy: 614, 204
+    size: 37, 33
+folder-open
+    rotate: false
+    xy: 652, 204
+    size: 45, 32
+folder-blocked
+    rotate: false
+    xy: 614, 237
+    size: 37, 33
+scrollbar-vertical
+    rotate: false
+    xy: 784, 0
+    size: 10, 385
+scrollbar-vertical-knob
+    rotate: false
+    xy: 794, 0
+    size: 8, 29
+    offset: 1, 0

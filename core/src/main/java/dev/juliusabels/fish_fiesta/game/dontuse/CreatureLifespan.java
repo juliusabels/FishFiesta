@@ -1,4 +1,4 @@
-package dev.juliusabels.fish_fiesta.game;
+package dev.juliusabels.fish_fiesta.game.dontuse;
 
 public enum CreatureLifespan {
     UNDEFINED(-1),

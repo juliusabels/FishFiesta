@@ -1,5 +1,8 @@
 package dev.juliusabels.fish_fiesta.game;
 
+import dev.juliusabels.fish_fiesta.game.features.WaterSubtype;
+import dev.juliusabels.fish_fiesta.game.features.WaterTemperature;
+import dev.juliusabels.fish_fiesta.game.features.WaterType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,24 +18,9 @@ public class WaterCreature {
     private CreatureSize size;
     private List<WaterType> waterTypes;
     private List<WaterSubtype> waterSubtypes;
-    private Optional<CreatureLifespan> lifespan;
+    private List<WaterTemperature> waterTemperatures;
 
     public String getID() {
         return name.replace(" ", "_").toLowerCase();
-    }
-
-    public enum WaterType {
-        SALT_WATER,
-        FRESH_WATER
-    }
-
-    public enum WaterSubtype {
-        DEEPSEA,
-        COAST,
-        OPEN_OCEAN,
-        CORAL_REEF,
-        LAKE,
-        RIVER,
-        KELP_FOREST
     }
 }

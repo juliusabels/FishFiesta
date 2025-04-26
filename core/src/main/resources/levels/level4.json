@@ -1,0 +1,8 @@
+{
+  "conditions": {
+    "WATER_TYPE": "FRESH",
+    "WATER_SUBTYPE": "CORAL_REEF",
+    "TEMPERATURE": "WARM"
+  },
+  "fishIDs": ["clownfish", "yellow_tang"]
+}

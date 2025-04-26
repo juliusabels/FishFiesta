@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.util.ResourceHandler;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Loading screen that displays a progress bar while game assets are loaded.
@@ -23,6 +24,7 @@ import dev.juliusabels.fish_fiesta.util.ResourceHandler;
  * The loading screen does not extend FFBaseScreen since it needs to display
  * before the base screen's resources are available.
  */
+@Slf4j
 public class LoadingScreen implements Screen {
     /** Reference to the main game instance */
     private final FishFiestaGame game;
@@ -81,7 +83,7 @@ public class LoadingScreen implements Screen {
         barY = Gdx.graphics.getHeight() / 2F - barHeight / 2F;
 
         // Start loading other assets
-        this.game.getResourceHandler().loadAssets();
+        this.game.getResourceHandler().loadResources();
     }
 
     /**
@@ -113,6 +115,7 @@ public class LoadingScreen implements Screen {
 
         // If loading is complete, transition to the main game screen
         if (finished) {
+            log.info("Finished loading resources");
             game.setScreen(new MainMenuScreen(game));
         }
     }

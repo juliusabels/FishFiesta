@@ -4,35 +4,51 @@ import dev.juliusabels.fish_fiesta.game.features.SizeCategory;
 import dev.juliusabels.fish_fiesta.game.features.WaterSubtype;
 import dev.juliusabels.fish_fiesta.game.features.WaterTemperature;
 import dev.juliusabels.fish_fiesta.game.features.WaterType;
+import lombok.Getter;
+
+import java.util.List;
 
 public enum ConditionType {
-    WATER_TYPE {
+    WATER_TYPE(false) {
         @Override
-        public boolean isSatisfied(WaterCreature creature, String value) {
-            WaterType requiredType = WaterType.valueOf(value);
-            return creature.getWaterTypes().contains(requiredType);
+        public boolean isSatisfied(WaterCreature creature, List<String> values) {
+            return values.stream()
+                .map(WaterType::valueOf)
+                .anyMatch(type -> creature.getWaterTypes().contains(type));
         }
     },
-    WATER_SUBTYPE {
+    WATER_SUBTYPE(false) {
         @Override
-        public boolean isSatisfied(WaterCreature creature, String value) {
-            WaterSubtype requiredSubtype = WaterSubtype.valueOf(value);
-            return creature.getWaterSubtypes().contains(requiredSubtype);
+        public boolean isSatisfied(WaterCreature creature, List<String> values) {
+            return values.stream()
+                .map(WaterSubtype::valueOf)
+                .anyMatch(subtype -> creature.getWaterSubtypes().contains(subtype));
         }
     },
-    SIZE_CATEGORY {
+    SIZE(true) {
         @Override
-        public boolean isSatisfied(WaterCreature creature, String value) {
-            SizeCategory requiredSize = SizeCategory.valueOf(value);
-            return creature.getSize().getCategoriesFromSize() == requiredSize;
+        public boolean isSatisfied(WaterCreature creature, List<String> values) {
+            SizeCategory creatureSize = creature.getSize().getCategoriesFromSize();
+            return values.stream()
+                .map(SizeCategory::valueOf)
+                .anyMatch(size -> creatureSize == size);
         }
     },
-    TEMPERATURE {
+    TEMPERATURE(false) {
         @Override
-        public boolean isSatisfied(WaterCreature creature, String value) {
-            WaterTemperature temperature = WaterTemperature.valueOf(value);
-            return creature.getWaterTemperatures().contains(temperature);
+        public boolean isSatisfied(WaterCreature creature, List<String> values) {
+            return values.stream()
+                .map(WaterTemperature::valueOf)
+                .anyMatch(temp -> creature.getWaterTemperatures().contains(temp));
         }
     };
-    public abstract boolean isSatisfied(WaterCreature creature, String value);
+
+    @Getter
+    private final boolean allowMultiple;
+
+    ConditionType(boolean allowMultiple) {
+        this.allowMultiple = allowMultiple;
+    }
+
+    public abstract boolean isSatisfied(WaterCreature creature, List<String> values);
 }

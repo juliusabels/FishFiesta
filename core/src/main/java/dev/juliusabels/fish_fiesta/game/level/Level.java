@@ -11,14 +11,14 @@ import java.util.Map;
 @Getter
 public class Level {
     private final String id;
-    private final Map<ConditionType, String> conditions;
+    private final Map<ConditionType, List<String>> conditions;
     private final List<String> fishIDs;
     @Setter
     private boolean completed;
     @Setter
     private int remainingLives;
 
-    public Level(String id, Map<ConditionType, String> conditions, List<String> fishIds) {
+    public Level(String id, Map<ConditionType, List<String>> conditions, List<String> fishIds) {
         this.id = id;
         this.conditions = conditions;
         this.fishIDs = fishIds;

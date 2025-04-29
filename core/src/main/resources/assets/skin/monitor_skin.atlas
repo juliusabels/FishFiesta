@@ -46,3 +46,7 @@ scrollbar-vertical-knob
     xy: 794, 0
     size: 8, 29
     offset: 1, 0
+guestlist-window
+    rotate: false
+    xy: 614, 271
+    size: 133, 220

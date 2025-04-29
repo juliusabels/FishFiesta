@@ -4,6 +4,8 @@ Possible assets:
 - https://humblepixel.itch.io/pocket-inventory-series-5-player-status
 - Commission tofupixel for background art
 - https://kenney.nl/assets/category:2D?sort=update
+- https://seliel-the-shaper.itch.io/fishing-gear
+- https://cyangmou.itch.io/pixel-rpg-icons-fishing-16x16
 
 Useful stuff:
 - https://mana-break.blogspot.com/2014/06/power-of-json-in-game-development-items.html

@@ -1,8 +1,0 @@
-{
-  "conditions": {
-    "WATER_TYPE": "SALT",
-    "WATER_SUBTYPE": "CORAL_REEF",
-    "SIZE_CATEGORY": "MEDIUM"
-  },
-  "fishIDs": ["clownfish", "blue_tang", "yellow_tang", "moorish_idol"]
-}

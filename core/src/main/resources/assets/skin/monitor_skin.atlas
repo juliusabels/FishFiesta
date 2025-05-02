@@ -50,3 +50,15 @@ guestlist-window
     rotate: false
     xy: 614, 271
     size: 133, 220
+fish_size-small
+    rotate: false
+    xy: 624, 496
+    size: 10, 8
+fish_size-medium
+    rotate: false
+    xy: 624, 505
+    size: 16, 11
+fish_size-big
+    rotate: false
+    xy: 624, 517
+    size: 22, 14

@@ -52,10 +52,6 @@ public class ResourceHandler {
         return "assets/" + fileName;
     }
 
-    public static String shaderFile(String fileName) {
-        return "shader/" + fileName;
-    }
-
     public static String levelFile(String fileName) {
         return "levels/" + fileName;
     }

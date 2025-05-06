@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.game.ConditionType;
 import dev.juliusabels.fish_fiesta.game.level.Level;
@@ -33,7 +35,19 @@ public class LevelScreen extends FFBaseScreen {
 
         contentTable.clear();
 
+        Table fishCamWindow = new Table();
+        fishCamWindow.background(this.monitorSkin.getDrawable("fishcam-window"));
 
+        Table cam = new Table();
+        Image bg = new Image(this.monitorSkin.getDrawable("fishcam-bg"));
+        cam.add(bg).padTop(1).padLeft(2);
+
+        //TODO here add fish to cam
+
+
+        fishCamWindow.add(cam);
+
+        contentTable.add(fishCamWindow).expand().left().padLeft(60).padBottom(160);
 
 
         Table guestListWindow = new Table();

@@ -62,3 +62,19 @@ fish_size-big
     rotate: false
     xy: 624, 517
     size: 22, 14
+fishcam-window
+    rotate: false
+    xy: 816, 0
+    size: 133, 143
+fishcam-bg
+    rotate: false
+    xy: 816, 143
+    size: 127, 107
+fishcam-deny
+    rotate: false
+    xy: 949, 0
+    size: 11, 11
+fishcam-accept
+    rotate: false
+    xy: 960, 0
+    size: 11, 11

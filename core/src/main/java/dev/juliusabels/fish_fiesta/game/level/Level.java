@@ -16,14 +16,14 @@ public class Level {
     @Setter
     private boolean completed;
     @Setter
-    private int remainingLives;
+    private int mistakes;
 
     public Level(String id, Map<ConditionType, List<String>> conditions, List<String> fishIds) {
         this.id = id;
         this.conditions = conditions;
         this.fishIDs = fishIds;
         this.completed = false;
-        this.remainingLives = 3;
+        this.mistakes = 0;
     }
 
     public boolean meetsConditions(WaterCreature creature) {

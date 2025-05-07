@@ -78,3 +78,23 @@ fishcam-accept
     rotate: false
     xy: 960, 0
     size: 11, 11
+start_button
+    rotate: false
+    xy: 816, 256
+    size: 64, 64
+start_button-down
+    rotate: false
+    xy: 816, 321
+    size: 64, 64
+temperature-warm
+    rotate: false
+    xy: 656, 496
+    size: 16, 32
+temperature-medium
+    rotate: false
+    xy: 672, 496
+    size: 16, 32
+temperature-cold
+    rotate: false
+    xy: 688, 496
+    size: 16, 32

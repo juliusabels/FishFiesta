@@ -6,6 +6,7 @@ Possible assets:
 - https://kenney.nl/assets/category:2D?sort=update
 - https://seliel-the-shaper.itch.io/fishing-gear
 - https://cyangmou.itch.io/pixel-rpg-icons-fishing-16x16
+- https://ansimuz.itch.io/underwater-diving
 
 Useful stuff:
 - https://mana-break.blogspot.com/2014/06/power-of-json-in-game-development-items.html

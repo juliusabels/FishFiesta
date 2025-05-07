@@ -5,10 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.game.ConditionType;
@@ -21,6 +19,8 @@ public class LevelScreen extends FFBaseScreen {
     private final DialogOverlay exitDialog;
     private Level currentLevel;
     private final BitmapFont basicTextFont;
+    private boolean levelStarted;
+    private Table fishcamContent;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
@@ -28,6 +28,7 @@ public class LevelScreen extends FFBaseScreen {
         exitDialog = new DialogOverlay(game, stage);
         basicTextFont = new BitmapFont();
         basicTextFont.getData().setScale(0.7F);
+        levelStarted = false;
     }
 
     public void show() {
@@ -38,34 +39,51 @@ public class LevelScreen extends FFBaseScreen {
         Table fishCamWindow = new Table();
         fishCamWindow.background(this.monitorSkin.getDrawable("fishcam-window"));
 
-        Table cam = new Table();
-        Image bg = new Image(this.monitorSkin.getDrawable("fishcam-bg"));
-        cam.add(bg).padTop(1).padLeft(2);
+        fishcamContent = new Table();
 
-        //TODO here add fish to cam
+        if (!levelStarted) {
+            Button startButton = new Button(this.monitorSkin.getDrawable("start_button"), this.monitorSkin.getDrawable("start_button-down"));
+            startButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    levelStarted = true;
+                    show();
+                }
+            });
+            fishcamContent.add(startButton).expand().center();
+        }
 
-
-        fishCamWindow.add(cam);
+        fishCamWindow.add(fishcamContent);
 
         contentTable.add(fishCamWindow).expand().left().padLeft(60).padBottom(160);
 
 
+        //TODO make all sprites bigger including window sprite
         Table guestListWindow = new Table();
+        guestListWindow.debug();
         guestListWindow.background(this.monitorSkin.getDrawable("guestlist-window"));
 
         Table conditions = new Table();
         conditions.setFillParent(true);
+
         this.currentLevel.getConditions().forEach((type, values) -> {
             if (type == ConditionType.SIZE && !values.isEmpty()) {
                 Table size = new Table();
-                size.left();
-                Label label = new Label("Fish Size: ", new Label.LabelStyle(basicTextFont, Color.BLACK));
-                size.add(label).padTop(20).left().padLeft(5);
                 for (String value : values) {
+                    //TODO tooltip should appear closer to sprite and look better (maybe own font)
+                    Tooltip<Label> tooltip = new Tooltip<>(new Label("Fish size: " + value.toLowerCase(), new Label.LabelStyle(basicTextFont, Color.BLACK)));
                     Image image = new Image(this.monitorSkin.getDrawable("fish_size-" + value.toLowerCase()));
+                    image.addListener(tooltip);
                     size.add(image).padTop(20).space(5).left();
                 }
-                conditions.add(size).left().expandX().row();
+                conditions.add(size).expandX().left().padRight(20).row();
+            }
+            conditions.row().space(5);
+
+            if (type == ConditionType.TEMPERATURE && !values.isEmpty()) {
+                Image image = new Image(this.monitorSkin.getDrawable("temperature-" + values.getFirst().toLowerCase()));
+
+                conditions.add(image).left().row();
             }
 
 
@@ -115,6 +133,8 @@ public class LevelScreen extends FFBaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+
 
         // If back key pressed, show dialog instead of immediate exit. If pressed again close dialog window again
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {

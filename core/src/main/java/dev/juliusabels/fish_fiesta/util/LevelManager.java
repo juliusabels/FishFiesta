@@ -62,22 +62,22 @@ public class LevelManager {
         return preferences.getBoolean(getLevelCompletionKey(levelId), false);
     }
 
-    public void markLevelCompleted(String levelId, int remainingLives) {
+    public void markLevelCompleted(String levelId, int mistakes) {
         preferences.putBoolean(getLevelCompletionKey(levelId), true);
-        preferences.putInteger(getLevelLivesKey(levelId), remainingLives);
+        preferences.putInteger(getLevelMistakes(levelId), mistakes);
         preferences.flush();
     }
 
-    public int getRemainingLives(String levelId) {
-        return preferences.getInteger(getLevelLivesKey(levelId), 0);
+    public int getMistakes(String levelId) {
+        return preferences.getInteger(getLevelMistakes(levelId), 0);
     }
 
     private String getLevelCompletionKey(String levelId) {
         return levelId + ".completed";
     }
 
-    private String getLevelLivesKey(String levelId) {
-        return levelId + ".lives";
+    private String getLevelMistakes(String levelId) {
+        return levelId + ".mistakes";
     }
 
     public boolean loadLevel(String levelId) {
@@ -124,7 +124,7 @@ public class LevelManager {
                 }
 
                 conditions.put(type, values);
-                log.debug("Parsed condition: {} = {}", type, conditions.get(type));
+                log.debug("Parsed condition: {} = {} for level {}", type, conditions.get(type), levelId);
             }
         }
 
@@ -152,7 +152,7 @@ public class LevelManager {
 
         Level level = new Level(levelId, conditions, fishIDs);
         level.setCompleted(isLevelCompleted(levelId));
-        level.setRemainingLives(isLevelCompleted(levelId) ? getRemainingLives(levelId) : 3);
+        level.setMistakes(isLevelCompleted(levelId) ? getMistakes(levelId) : 0);
         this.activelevel = level;
 
         return true;

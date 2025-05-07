@@ -34,6 +34,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
         font = new BitmapFont();
     }
 
+    //TODO I changed the contentTable padding, check if this still works with >41 levels
     @Override
     public void show() {
         super.show();
@@ -97,7 +98,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
             levelCell.add(button).row();
 
             if (levelManager.isLevelCompleted(levelId)) {
-                Label remainingLives = new Label(String.valueOf(levelManager.getRemainingLives(levelId)), new Label.LabelStyle(font, Color.RED));
+                Label remainingLives = new Label(String.valueOf(levelManager.getMistakes(levelId)), new Label.LabelStyle(font, Color.RED));
                 levelCell.add(remainingLives);
             }
 

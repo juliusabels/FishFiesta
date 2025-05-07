@@ -122,11 +122,12 @@ public class  FFBaseScreen implements Screen {
         Table root = new Table();
         root.setFillParent(true);
         root.setBackground(monitorSkin.getDrawable("monitor"));
+        root.padBottom(48);
         stage.addActor(root);
 
         // Add content table for child screens to populate
         contentTable = new Table();
-        root.add(contentTable).expand().fill().pad(40);
+        root.add(contentTable).expand().fill().padBottom(50).padLeft(45).padRight(45).padTop(40);
 
         // Set the input processor to the stage
         Gdx.input.setInputProcessor(stage);

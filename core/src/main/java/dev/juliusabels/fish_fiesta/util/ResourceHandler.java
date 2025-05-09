@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ResourceHandler {
     private final AssetManager assetManager;
     private final LevelManager levelManager;
+    private final FishManager fishManager;
 
     private static final String BACKGROUND_TEXTURE = assetFile("background.png");
     private static final String MONITOR_SKIN = assetFile("skin/monitor_skin.json");
@@ -23,6 +24,7 @@ public class ResourceHandler {
     public ResourceHandler() {
         assetManager = new AssetManager();
         levelManager = new LevelManager();
+        fishManager = new FishManager();
     }
 
     public void loadResources() {
@@ -31,9 +33,11 @@ public class ResourceHandler {
         assetManager.load(MONITOR_SKIN, Skin.class, new SkinLoader.SkinParameter());
         assetManager.load(FISH_FONT_BIG, BitmapFont.class);
 
-        // Initialize LevelManager and discover levels
-        // This way level discovery is part of the loading process
-        levelManager.discoverLevels();
+        //Load fish ids on startup, to safe time later
+        fishManager.findFishes();
+
+        //Level ids should be loaded on game startup. This way displaying the level selection is faster
+        levelManager.findLevels();
     }
 
     public Texture getBackgroundTexture() {
@@ -58,6 +62,10 @@ public class ResourceHandler {
 
     public static FileHandle levelFileHandle(String fileName) {
         return Gdx.files.internal("levels/" + fileName);
+    }
+
+    public static FileHandle fishFileHandle(String fileName) {
+        return Gdx.files.internal("fishes/" + fileName);
     }
 
     public float getLoadingProgress() {

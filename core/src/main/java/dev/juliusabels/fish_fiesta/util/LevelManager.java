@@ -15,12 +15,11 @@ import java.util.*;
 
 @Slf4j
 public class LevelManager {
-    private static final String LEVEL_DIRECTORY = "levels";
     private static final String PREFERENCES_NAME = "fish_fiesta_level_data";
 
     private final Preferences preferences;
     private final List<String> levelIds = new ArrayList<>();
-    private boolean levelsDiscovered = false;
+    private boolean allLevelsFound = false;
 
     @Getter
     @Null
@@ -30,10 +29,10 @@ public class LevelManager {
         this.preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
     }
 
-    public void discoverLevels() {
-        if (levelsDiscovered) return;
+    public void findLevels() {
+        if (allLevelsFound) return;
 
-        FileHandle dir = Gdx.files.internal(LEVEL_DIRECTORY);
+        FileHandle dir = Gdx.files.internal("levels");
         if (!dir.exists()) {
             log.error("The directory {} does not exist", dir);
             return;
@@ -47,13 +46,14 @@ public class LevelManager {
             }
         }
 
-        levelsDiscovered = true;
-        log.info("Discovered all levels");
+        allLevelsFound = true;
+        log.info("Found all levels");
     }
 
     public List<String> getAllLevelIds() {
-        if (!levelsDiscovered) {
-            discoverLevels();
+        //We only have this in case this method (for a reason only god knows) is called before the level ids were loaded
+        if (!allLevelsFound) {
+            findLevels();
         }
         return Collections.unmodifiableList(levelIds);
     }
@@ -80,7 +80,7 @@ public class LevelManager {
         return levelId + ".mistakes";
     }
 
-    public boolean loadLevel(String levelId) {
+    public boolean loadLevelForId(String levelId) {
         if (!levelIds.contains(levelId)) {
            log.error("Level {{}} not found", levelId);
             return false;

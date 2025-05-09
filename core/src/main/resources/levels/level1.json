@@ -2,7 +2,7 @@
   "conditions": {
     "water_type": "salt",
     "water_subtype": "coral_reef",
-    "temperature": "warm",
+    "temperature": "medium",
     "size": ["small", "medium"]
   },
   "fishIDs": ["clownfish", "salmon", "cod", "tuna"]

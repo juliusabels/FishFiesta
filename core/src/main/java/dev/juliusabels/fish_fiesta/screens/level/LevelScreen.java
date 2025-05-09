@@ -14,6 +14,7 @@ import dev.juliusabels.fish_fiesta.game.level.Level;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
+import dev.juliusabels.fish_fiesta.util.TooltipHandler;
 
 public class LevelScreen extends FFBaseScreen {
     private final DialogOverlay exitDialog;
@@ -21,11 +22,13 @@ public class LevelScreen extends FFBaseScreen {
     private final BitmapFont basicTextFont;
     private boolean levelStarted;
     private Table fishcamContent;
+    private TooltipHandler tooltipHandler;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
         this.currentLevel = currentLevel;
         exitDialog = new DialogOverlay(game, stage);
+        tooltipHandler = new TooltipHandler();
         basicTextFont = new BitmapFont();
         basicTextFont.getData().setScale(0.7F);
         levelStarted = false;
@@ -57,7 +60,6 @@ public class LevelScreen extends FFBaseScreen {
 
         contentTable.add(fishCamWindow).expand().left().padLeft(60).padBottom(160);
 
-
         //TODO make all sprites bigger including window sprite
         Table guestListWindow = new Table();
         guestListWindow.debug();
@@ -70,13 +72,11 @@ public class LevelScreen extends FFBaseScreen {
             if (type == ConditionType.SIZE && !values.isEmpty()) {
                 Table size = new Table();
                 for (String value : values) {
-                    //TODO tooltip should appear closer to sprite and look better (maybe own font)
-                    Tooltip<Label> tooltip = new Tooltip<>(new Label("Fish size: " + value.toLowerCase(), new Label.LabelStyle(basicTextFont, Color.BLACK)));
                     Image image = new Image(this.monitorSkin.getDrawable("fish_size-" + value.toLowerCase()));
-                    image.addListener(tooltip);
+                    tooltipHandler.appendTooltip(value.toLowerCase() + " fish", image);
                     size.add(image).padTop(20).space(5).left();
                 }
-                conditions.add(size).expandX().left().padRight(20).row();
+                conditions.add(size).expandX().left().padRight(90).row();
             }
             conditions.row().space(5);
 
@@ -86,20 +86,6 @@ public class LevelScreen extends FFBaseScreen {
                 conditions.add(image).left().row();
             }
 
-
-            /*
-            String typeName = type.name() + ": ";
-            StringBuilder builder = new StringBuilder();
-            int valuesSize = values.size() - 1;
-            for (int i = 0; i <= valuesSize; i++) {
-                builder.append(values.get(i));
-                if (i != valuesSize) {
-                    builder.append(", ");
-                }
-            }
-            Label label = new Label(typeName + builder, new Label.LabelStyle(font, Color.BLACK));
-            conditions.add(label).row();
-             */
         });
         guestListWindow.add(conditions);
 

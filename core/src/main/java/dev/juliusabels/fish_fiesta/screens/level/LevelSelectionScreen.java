@@ -88,7 +88,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (levelManager.loadLevel(levelId) && levelManager.getActivelevel() != null) {
+                    if (levelManager.loadLevelForId(levelId) && levelManager.getActivelevel() != null) {
                         game.setScreen(new LevelScreen(game, levelManager.getActivelevel()));
                     } else {
                         log.error("Unable to load level from id: {}", levelId);

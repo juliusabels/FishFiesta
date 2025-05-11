@@ -80,6 +80,7 @@ public class LevelManager {
         return levelId + ".mistakes";
     }
 
+    //TODO maybe make use of JsonHelper here as well
     public boolean loadLevelForId(String levelId) {
         if (!levelIds.contains(levelId)) {
            log.error("Level {{}} not found", levelId);

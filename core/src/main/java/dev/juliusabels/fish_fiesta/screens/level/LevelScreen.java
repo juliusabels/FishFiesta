@@ -14,6 +14,8 @@ import dev.juliusabels.fish_fiesta.game.level.Level;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
+import dev.juliusabels.fish_fiesta.util.FishManager;
+import dev.juliusabels.fish_fiesta.util.LevelManager;
 import dev.juliusabels.fish_fiesta.util.TooltipHandler;
 
 public class LevelScreen extends FFBaseScreen {
@@ -23,6 +25,7 @@ public class LevelScreen extends FFBaseScreen {
     private boolean levelStarted;
     private Table fishcamContent;
     private TooltipHandler tooltipHandler;
+    private final FishManager fishManager;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
@@ -32,6 +35,7 @@ public class LevelScreen extends FFBaseScreen {
         basicTextFont = new BitmapFont();
         basicTextFont.getData().setScale(0.7F);
         levelStarted = false;
+        fishManager = game.getResourceHandler().getFishManager();
     }
 
     public void show() {
@@ -50,6 +54,7 @@ public class LevelScreen extends FFBaseScreen {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     levelStarted = true;
+                    fishManager.loadFishForId("sockeye_salmon");
                     show();
                 }
             });
@@ -62,7 +67,6 @@ public class LevelScreen extends FFBaseScreen {
 
         //TODO make all sprites bigger including window sprite
         Table guestListWindow = new Table();
-        guestListWindow.debug();
         guestListWindow.background(this.monitorSkin.getDrawable("guestlist-window"));
 
         Table conditions = new Table();
@@ -85,11 +89,10 @@ public class LevelScreen extends FFBaseScreen {
 
                 conditions.add(image).left().row();
             }
-
         });
         guestListWindow.add(conditions);
 
-        contentTable.add(guestListWindow).expand().right().padRight(20).padBottom(130);
+        contentTable.add(guestListWindow).expand().right().padRight(20).padBottom(100);
     }
 
     //TODO For level screen we want "continue playing", "exit to level selection", "safe level state", "restart level"

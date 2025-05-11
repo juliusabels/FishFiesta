@@ -3,7 +3,7 @@
   "notableFeatures": "The name sockeye comes from a poor attempt to translate the word suk-kegh from British Columbia's native Coast Salish language. Suk-kegh means red fish.",
   "minSize": 90,
   "maxSize": 90,
-  "waterTypes": ["salt, fresh"],
-  "waterSubtypes": ["lakes", "rivers", "open_ocean"],
+  "waterTypes": ["salt", "fresh"],
+  "waterSubtypes": ["lake", "river", "open_ocean"],
   "waterTemperatures": ["cold"]
 }

@@ -8,13 +8,14 @@ public final class CreatureSize {
     private final int rangeStart;
     private final int rangeEnd;
 
-    public CreatureSize(int rangeEnd) {
-        this(0, rangeEnd);
-    }
-
     public CreatureSize(int rangeStart, int rangeEnd) {
-        this.rangeStart = rangeStart;
-        this.rangeEnd = rangeEnd;
+        if (rangeStart == 0 || rangeEnd == 0) {
+            this.rangeStart = 0;
+            this.rangeEnd = 0;
+        } else {
+            this.rangeStart = rangeStart;
+            this.rangeEnd = rangeEnd;
+        }
     }
 
     public SizeCategory getCategoriesFromSize() {

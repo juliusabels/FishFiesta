@@ -48,20 +48,20 @@ scrollbar-vertical-knob
     offset: 1, 0
 guestlist-window
     rotate: false
-    xy: 614, 271
-    size: 133, 220
+    xy: 614, 386
+    size: 208, 290
 fish_size-small
     rotate: false
-    xy: 624, 496
-    size: 10, 8
+    xy: 624, 288
+    size: 20, 16
 fish_size-medium
     rotate: false
-    xy: 624, 505
-    size: 16, 11
+    xy: 624, 306
+    size: 32, 22
 fish_size-big
     rotate: false
-    xy: 624, 517
-    size: 22, 14
+    xy: 624, 330
+    size: 44, 28
 fishcam-window
     rotate: false
     xy: 816, 0
@@ -88,13 +88,13 @@ start_button-down
     size: 64, 64
 temperature-warm
     rotate: false
-    xy: 656, 496
-    size: 16, 32
+    xy: 752, 272
+    size: 24, 96
 temperature-medium
     rotate: false
-    xy: 672, 496
-    size: 16, 32
+    xy: 726, 272
+    size: 24, 96
 temperature-cold
     rotate: false
-    xy: 688, 496
-    size: 16, 32
+    xy: 700, 272
+    size: 24, 96

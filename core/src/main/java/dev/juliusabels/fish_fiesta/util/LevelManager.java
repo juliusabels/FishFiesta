@@ -6,7 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Null;
-import dev.juliusabels.fish_fiesta.game.ConditionType;
+import dev.juliusabels.fish_fiesta.game.level.ConditionType;
 import dev.juliusabels.fish_fiesta.game.level.Level;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -68,12 +68,31 @@ public class LevelManager {
         preferences.flush();
     }
 
+    public boolean isLevelFailed(String levelId) {
+        return preferences.getBoolean(getLevelFailedKey(levelId), false);
+    }
+
+    @SuppressWarnings("GDXJavaMissingFlush")
+    public void markLevelFailed(String levelId, int mistakes) {
+        preferences.putInteger(getLevelMistakes(levelId), mistakes);
+        setLevelFailed(levelId, true);
+    }
+
+    public void setLevelFailed(String levelId, boolean value) {
+        preferences.putBoolean(getLevelFailedKey(levelId), value);
+        preferences.flush();
+    }
+
     public int getMistakes(String levelId) {
         return preferences.getInteger(getLevelMistakes(levelId), 0);
     }
 
     private String getLevelCompletionKey(String levelId) {
         return levelId + ".completed";
+    }
+
+    private String getLevelFailedKey(String levelId) {
+        return levelId + ".failed";
     }
 
     private String getLevelMistakes(String levelId) {
@@ -154,17 +173,9 @@ public class LevelManager {
         Level level = new Level(levelId, conditions, fishIDs);
         level.setCompleted(isLevelCompleted(levelId));
         level.setMistakes(isLevelCompleted(levelId) ? getMistakes(levelId) : 0);
+        this.setLevelFailed(levelId, false);
         this.activelevel = level;
 
         return true;
-    }
-
-    public void saveLevelMetric(String levelId, String metricName, String value) {
-        preferences.putString(levelId + "." + metricName, value);
-        preferences.flush();
-    }
-
-    public String getLevelMetric(String levelId, String metricName, String defaultValue) {
-        return preferences.getString(levelId + "." + metricName, defaultValue);
     }
 }

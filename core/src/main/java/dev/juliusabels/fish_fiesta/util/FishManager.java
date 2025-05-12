@@ -5,13 +5,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Null;
-import dev.juliusabels.fish_fiesta.game.ConditionType;
 import dev.juliusabels.fish_fiesta.game.CreatureSize;
 import dev.juliusabels.fish_fiesta.game.WaterCreature;
 import dev.juliusabels.fish_fiesta.game.features.WaterSubtype;
 import dev.juliusabels.fish_fiesta.game.features.WaterTemperature;
 import dev.juliusabels.fish_fiesta.game.features.WaterType;
-import dev.juliusabels.fish_fiesta.game.level.Level;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

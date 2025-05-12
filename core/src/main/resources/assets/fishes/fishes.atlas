@@ -1,0 +1,27 @@
+fishes.png
+size: 1024, 1024
+repeat: none
+sockeye_salmon
+    xy: 0, 0
+    size: 64, 64
+asian_carp
+    xy: 64, 0
+    size: 64, 64
+atlantic_tuna
+    xy: 128, 0
+    size: 64, 64
+brown_trout
+    xy: 192, 0
+    size: 64, 64
+california_sheephead
+    xy: 256, 0
+    size: 64, 64
+clownfish
+    xy: 320, 0
+    size: 64, 64
+common_coral_trout
+    xy: 384, 0
+    size: 64, 64
+atlantic_mackerel
+    xy: 448, 0
+    size: 64, 64

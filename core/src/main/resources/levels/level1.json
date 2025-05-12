@@ -2,8 +2,8 @@
   "conditions": {
     "water_type": "salt",
     "water_subtype": "coral_reef",
-    "temperature": "medium",
+    "temperature": "warm",
     "size": ["small", "medium"]
   },
-  "fishIDs": ["clownfish", "salmon", "cod", "tuna"]
+  "fishIDs": ["clownfish", "sockeye_salmon", "atlantic_tuna", "asian_carp"]
 }

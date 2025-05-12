@@ -1,0 +1,9 @@
+{
+  "description": "Male and female sheephead have different color patterns and body shapes. The male is larger, with black tail and head sections; wide, reddish-orange midriff; and red eyes and a fleshy forehead bump. The female is dull pink over most of its body.",
+  "notableFeatures": " In 2009, fishermen made almost $334,000 in revenue from catching California sheephead. The California Department of Fish and Game established fishing regulations to protect sheephead in 2001.",
+  "minSize": 90,
+  "maxSize": 90,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["kelp_forest"],
+  "waterTemperatures": ["medium"]
+}

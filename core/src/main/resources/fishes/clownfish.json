@@ -1,0 +1,9 @@
+{
+  "description": "The clownfish can be many different colours, depending on its species, including yellow, orange, red, and black. Most have white details.",
+  "notableFeatures": "Everyone knows them from Finding Nemo. Clownfish communicate through clicks and pops. They live in a symbiotic relationship with an anomone for which they care and which protects them from predators. What is special is that they are all born male and can change their sex to female over time.",
+  "minSize": 7,
+  "maxSize": 8,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coral_reef"],
+  "waterTemperatures": ["warm"]
+}

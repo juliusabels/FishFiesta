@@ -1,0 +1,9 @@
+{
+  "description": "The Atlantic bluefin tuna's body is fusiform, or tapered at both ends like a football. Bluefin tuna have a pointed snout and eyes smaller than other tuna species. The tuna's fins fit into slots on the body that reduce drag while swimming.",
+  "notableFeatures": "Tuna can keep their bodys warmer then the surrounding water which allows them  to digest their food more  efficiently. Tuna can travel up to 8.000 km. And it is also delicious as Sushi or even tinned with oil. ",
+  "minSize": 210,
+  "maxSize": 460,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coast", "open_ocean"],
+  "waterTemperatures": ["medium"]
+}

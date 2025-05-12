@@ -10,7 +10,11 @@ Possible assets:
 
 Useful stuff:
 - https://mana-break.blogspot.com/2014/06/power-of-json-in-game-development-items.html
-- 
+
+Quellen: 
+- https://www.fishbase.se/search.php
+- Fish cam niderlande ref
+- libgdx
 
 Layout:
 1. Main Menu

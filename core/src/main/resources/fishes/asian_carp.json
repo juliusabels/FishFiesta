@@ -1,0 +1,9 @@
+{
+  "description": "A grey fish with low set eyes.",
+  "notableFeatures": "They can jump up to 3 meters. They were used in american waters in hopes of fighting the algea problem that they had. Due to their jumping skills they escaped their designated waters and are now considered invasive. They are not often eaten in the west while they are a casual food source in some east asian countrys.",
+  "minSize": 150,
+  "maxSize": 150,
+  "waterTypes": ["fresh"],
+  "waterSubtypes": ["lake", "river"],
+  "waterTemperatures": ["cold", "medium"]
+}

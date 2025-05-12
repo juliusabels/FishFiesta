@@ -1,6 +1,5 @@
 package dev.juliusabels.fish_fiesta.game.level;
 
-import dev.juliusabels.fish_fiesta.game.ConditionType;
 import dev.juliusabels.fish_fiesta.game.WaterCreature;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +28,10 @@ public class Level {
     public boolean meetsConditions(WaterCreature creature) {
         return conditions.entrySet().stream()
             .allMatch(entry -> entry.getKey().isSatisfied(creature, entry.getValue()));
+    }
+
+    public void increaseMistakes() {
+        this.setMistakes(this.getMistakes() + 1);
     }
 
 }

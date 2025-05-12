@@ -6,6 +6,9 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ public class ResourceHandler {
     private static final String BACKGROUND_TEXTURE = assetFile("background.png");
     private static final String MONITOR_SKIN = assetFile("skin/monitor_skin.json");
     private static final String FISH_FONT_BIG = assetFile("font/fish_font_big.fnt");
+    private static final String FISH_SPRITES = assetFile("fishes/fishes.atlas");
 
     public ResourceHandler() {
         assetManager = new AssetManager();
@@ -32,6 +36,7 @@ public class ResourceHandler {
         assetManager.load(BACKGROUND_TEXTURE, Texture.class);
         assetManager.load(MONITOR_SKIN, Skin.class, new SkinLoader.SkinParameter());
         assetManager.load(FISH_FONT_BIG, BitmapFont.class);
+        assetManager.load(FISH_SPRITES, TextureAtlas.class);
 
         //Load fish ids on startup, to safe time later
         fishManager.findFishes();
@@ -50,6 +55,10 @@ public class ResourceHandler {
 
     public BitmapFont getFishFontBig() {
         return assetManager.get(FISH_FONT_BIG);
+    }
+
+    public TextureAtlas getFishSprites() {
+        return assetManager.get(FISH_SPRITES);
     }
 
     public static String assetFile(String fileName) {

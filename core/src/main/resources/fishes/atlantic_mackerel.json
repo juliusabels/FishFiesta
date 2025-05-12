@@ -1,0 +1,9 @@
+{
+  "description": "Atlantic mackerel are iridescent blue green on the back with a silvery white underbelly. They have 20 to 30 wavy black bars that run across the top half of their body, and a narrow dark streak that runs below these bars along each side. Their body is spindle-shaped, tapering at both ends.",
+  "notableFeatures": "Mackerels swim in large schools that can stretch up to 20 miles in length.Also known as the Boston, Scottish, or Norwegian species, people often catch this species in commercial fisheries. People sell this fish canned, fresh, frozen, and smoked. In fact, these fisheries catch approximately a million tons of this fish every year.",
+  "minSize": 30,
+  "maxSize": 50,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["open_ocean", "coast"],
+  "waterTemperatures": ["medium"]
+}

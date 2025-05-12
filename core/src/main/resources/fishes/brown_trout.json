@@ -1,0 +1,9 @@
+{
+  "description": "The brown trout is, as the name suggests, brown in colour. It varies from light silvery brown to the more common golden brown hue, and has darker spots on its back and sides, with a pale belly.",
+  "notableFeatures": "Trout is related to other salmon types of fish. They prefer cold streams. Other types of trout are also in the ocean and lakes but thy find their way into streams to lay eggs.",
+  "minSize": 40,
+  "maxSize": 80,
+  "waterTypes": ["fresh"],
+  "waterSubtypes": ["river"],
+  "waterTemperatures": ["cold"]
+}

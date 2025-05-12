@@ -97,9 +97,10 @@ public class LevelSelectionScreen extends FFBaseScreen {
             });
             levelCell.add(button).row();
 
-            if (levelManager.isLevelCompleted(levelId)) {
-                Label remainingLives = new Label(String.valueOf(levelManager.getMistakes(levelId)), new Label.LabelStyle(font, Color.RED));
-                levelCell.add(remainingLives);
+            if (levelManager.isLevelCompleted(levelId) || levelManager.isLevelFailed(levelId)) {
+                //TODO use icons
+                Label mistakes = new Label(String.valueOf(levelManager.getMistakes(levelId)), new Label.LabelStyle(font, Color.RED));
+                levelCell.add(mistakes);
             }
 
             levelsTable.add(levelCell).width(folderWidth).height(folderHeight);
@@ -111,7 +112,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
             }
         }
 
-        //TODO scrollbar can be improved, but it only required once we reach 41 levels
+        //TODO scrollbar can be improved, but it's only required once we reach 41 levels
 
         //Create scroll pane with improved configuration
         ScrollPane scrollPane = new ScrollPane(levelsTable, monitorSkin);
@@ -135,7 +136,6 @@ public class LevelSelectionScreen extends FFBaseScreen {
             new DialogButton("Exit") {
                 @Override
                 public void run() {
-                    //TODO safe game state here later
                     game.setScreen(new MainMenuScreen(game));
                 }
             }

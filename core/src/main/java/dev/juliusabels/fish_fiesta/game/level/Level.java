@@ -15,6 +15,8 @@ public class Level {
     @Setter
     private boolean completed;
     @Setter
+    private boolean inProgress;
+    @Setter
     private boolean failed;
     @Setter
     private int mistakes;
@@ -27,6 +29,7 @@ public class Level {
         this.fishIDs = fishIds;
         this.completed = false;
         this.failed = false;
+        this.inProgress = false;
         this.mistakes = 0;
         this.fishIndex = 0;
     }

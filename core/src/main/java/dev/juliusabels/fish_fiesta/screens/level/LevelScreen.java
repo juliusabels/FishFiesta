@@ -25,13 +25,12 @@ import java.util.List;
 @Slf4j
 public class LevelScreen extends FFBaseScreen {
     private final DialogOverlay exitDialog;
-    private Level currentLevel;
+    private final Level currentLevel;
     private final BitmapFont basicTextFont;
     private boolean levelStarted;
-    private Table fishcamContent;
-    private TooltipHandler tooltipHandler;
+    private final TooltipHandler tooltipHandler;
     private final FishManager fishManager;
-    private ResourceHandler resourceHandler;
+    private final ResourceHandler resourceHandler;
     private final LevelManager levelManager;
     private final List<String> fishes;
     private final int fishAmount;
@@ -41,7 +40,7 @@ public class LevelScreen extends FFBaseScreen {
         super(game);
         this.currentLevel = currentLevel;
         resourceHandler = game.getResourceHandler();
-        exitDialog = new DialogOverlay(game, stage);
+        exitDialog = new DialogOverlay(game, stage, contentTable);
         tooltipHandler = new TooltipHandler();
         basicTextFont = new BitmapFont();
         basicTextFont.getData().setScale(0.8F);
@@ -80,9 +79,9 @@ public class LevelScreen extends FFBaseScreen {
         Table fishCamWindow = new Table();
         fishCamWindow.background(this.monitorSkin.getDrawable("fishcam-window"));
 
-        fishcamContent = new Table();
+        Table fishcamContent = new Table();
 
-        if (!levelStarted) {
+        if (!levelStarted && !currentLevel.isInProgress()) {
             Button startButton = new Button(this.monitorSkin.getDrawable("start_button"), this.monitorSkin.getDrawable("start_button-down"));
             startButton.addListener(new ClickListener() {
                 @Override
@@ -189,7 +188,6 @@ public class LevelScreen extends FFBaseScreen {
         }
     }
 
-    //TODO For level screen we want "continue playing", "exit to level selection", "safe level state", "restart level"
     private void showExitDialog() {
         exitDialog.showButtons(
             new DialogButton("Resume") {
@@ -201,7 +199,7 @@ public class LevelScreen extends FFBaseScreen {
             new DialogButton("Save") {
                 @Override
                 public void run() {
-                    //TODO safe game state here later
+                    levelManager.safeLevelProgress(currentLevel.getId(), currentLevel.getMistakes(), fishIndex);
                 }
             },
             new DialogButton("Exit") {

@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
@@ -29,7 +26,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
 
     public LevelSelectionScreen(FishFiestaGame game) {
         super(game);
-        exitDialog = new DialogOverlay(game, stage);
+        exitDialog = new DialogOverlay(game, stage, contentTable);
         levelManager = game.getResourceHandler().getLevelManager();
         font = new BitmapFont();
     }
@@ -49,7 +46,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
 
         // Increase folder width to a more realistic value
         float folderWidth = 40; // Adjust based on actual folder size
-        float folderHeight = 50; // Approximate height of each folder cell with padding
+        float folderHeight = 85; // Approximate height of each folder cell with padding
 
         // Calculate available space inside the monitor (accounting for contentTable's padding)
         int availableWidth = MONITOR_WIDTH - 255; // 40px padding on left and right
@@ -78,8 +75,10 @@ public class LevelSelectionScreen extends FFBaseScreen {
             Label levelName = new Label(levelId.replace("level", ""), new Label.LabelStyle(font, Color.BLACK));
             levelCell.add(levelName).row();
 
+            String folderSuffix = levelManager.isLevelCompleted(levelId) ? "-complete" : levelManager.isLevelFailed(levelId) ? "-failed" : "";
+
             Button.ButtonStyle style = new Button.ButtonStyle(
-                levelManager.isLevelCompleted(levelId) ? monitorSkin.getDrawable("folder-blocked") : monitorSkin.getDrawable("folder"),
+                monitorSkin.getDrawable("folder" + folderSuffix),
                 monitorSkin.getDrawable("folder-open"),
                 null
             );
@@ -88,22 +87,44 @@ public class LevelSelectionScreen extends FFBaseScreen {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //TODO if level is complete show overlay to aks if the player wants to replay this level
-                    if (levelManager.loadLevelForId(levelId) && levelManager.getActivelevel() != null) {
-                        game.setScreen(new LevelScreen(game, levelManager.getActivelevel()));
+                    if (levelManager.isLevelCompleted(levelId)) {
+                        // Show confirmation dialog for completed levels
+                        DialogOverlay replayDialog = new DialogOverlay(game, stage, contentTable);
+                        replayDialog.showButtons(
+                            new DialogButton("Replay") {
+                                @Override
+                                public void run() {
+                                    loadLevel(levelId);
+                                }
+                            },
+                            new DialogButton("Cancel") {
+                                @Override
+                                public void run() {
+                                    // Do nothing, dialog will close automatically
+                                }
+                            }
+                        );
                     } else {
-                        log.error("Unable to load level from id: {}", levelId);
+                        // For non-completed levels, load directly
+                        loadLevel(levelId);
                     }
                 }
             });
             levelCell.add(button).row();
-
-            if (levelManager.isLevelCompleted(levelId) || levelManager.isLevelFailed(levelId)) {
-                //TODO use icons
-                Label mistakes = new Label(String.valueOf(levelManager.getMistakes(levelId)), new Label.LabelStyle(font, Color.RED));
-                levelCell.add(mistakes);
+            Table icons = new Table();
+            if (levelManager.isLevelCompleted(levelId) || levelManager.isLevelFailed(levelId) || levelManager.isLevelInProgress(levelId)) {
+                int mistakes = levelManager.getMistakes(levelId);
+                if (mistakes == 0) {
+                    icons.add(new Image(this.monitorSkin.getDrawable("mistake-icon-placeholder"))); //Renders an empty area of the size of an icon texture to make the folders align nicely (could this be implemented better? Probably! Do I care? Nope!)
+                }
+                for (int i = 0; i < mistakes; i++) {
+                    Image mistakeIcon = new Image(this.monitorSkin.getDrawable("mistake-icon"));
+                    icons.add(mistakeIcon);
+                }
+            } else {
+                icons.add(new Image(this.monitorSkin.getDrawable("mistake-icon-placeholder"))); //Renders an empty area of the size of an icon texture to make the folders align nicely (could this be implemented better? Probably! Do I care? Nope!)
             }
-
+            levelCell.add(icons);
             levelsTable.add(levelCell).width(folderWidth).height(folderHeight);
 
             currentColumn++;
@@ -124,6 +145,14 @@ public class LevelSelectionScreen extends FFBaseScreen {
 
         // Set a fixed height to define the cutoff point
         contentTable.add(scrollPane).expand().top().fill().maxHeight(availableHeight); // This defines the cutoff point
+    }
+
+    private void loadLevel(String levelId) {
+        if (levelManager.loadLevelForId(levelId) && levelManager.getActivelevel() != null) {
+            game.setScreen(new LevelScreen(game, levelManager.getActivelevel()));
+        } else {
+            log.error("Unable to load level from id: {}", levelId);
+        }
     }
 
     private void showExitDialog() {

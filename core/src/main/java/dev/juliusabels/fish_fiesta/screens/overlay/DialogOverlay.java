@@ -1,9 +1,7 @@
 package dev.juliusabels.fish_fiesta.screens.overlay;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,10 +14,12 @@ public class DialogOverlay {
     private final FishFiestaGame game;
     private final Table overlayTable;
     private final FishFontBig font;
+    private Table lowerTable; //todo rename this wtf
 
-    public DialogOverlay(FishFiestaGame game, Stage stage) {
+    public DialogOverlay(FishFiestaGame game, Stage stage, Table lowerTable) {
         this.game = game;
         this.font = new FishFontBig(game);
+        this.lowerTable = lowerTable;
 
         // Create overlay container
         overlayTable = new Table();
@@ -30,10 +30,13 @@ public class DialogOverlay {
         // Set semi-transparent background
         overlayTable.setBackground(game.getResourceHandler().getMonitorSkin().newDrawable("white", new Color(0, 0, 0, 0.2F)));
 
+
+
         stage.addActor(overlayTable);
     }
 
     public void showButtons(DialogButton... buttons) {
+        this.lowerTable.setTouchable(Touchable.disabled);
         // Create dialog box
         Table dialogBox = new Table();
         dialogBox.pad(20);
@@ -67,6 +70,7 @@ public class DialogOverlay {
 
     public void hide() {
         overlayTable.setVisible(false);
+        this.lowerTable.setTouchable(Touchable.enabled);
     }
 
     public boolean isVisible() {

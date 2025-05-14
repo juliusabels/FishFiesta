@@ -63,35 +63,46 @@ public class LevelManager {
     }
 
     public void markLevelCompleted(String levelId, int mistakes) {
+        clearPreferences(levelId);
         preferences.putBoolean(getLevelCompletionKey(levelId), true);
         preferences.putInteger(getLevelMistakesKey(levelId), mistakes);
         preferences.flush();
-        setFishIndex(levelId, 0);
+    }
+
+    public boolean isLevelInProgress(String levelId) {
+        return preferences.getBoolean(getLevelInProgressKey(levelId), false);
+    }
+
+    public void safeLevelProgress(String levelId, int mistakes, int fishIndex) {
+        clearPreferences(levelId);
+        preferences.putBoolean(getLevelInProgressKey(levelId), true);
+        preferences.putInteger(getLevelFishIndexKey(levelId), fishIndex);
+        preferences.putInteger(getLevelMistakesKey(levelId), mistakes);
+        preferences.flush();
     }
 
     public boolean isLevelFailed(String levelId) {
         return preferences.getBoolean(getLevelFailedKey(levelId), false);
     }
 
-    @SuppressWarnings("GDXJavaMissingFlush")
     public void markLevelFailed(String levelId, int mistakes) {
+        clearPreferences(levelId);
         preferences.putInteger(getLevelMistakesKey(levelId), mistakes);
-        setFishIndex(levelId, 0);
-        setLevelFailed(levelId, true);
+        preferences.putBoolean(getLevelFailedKey(levelId), true);
+        preferences.flush();
     }
 
-    public void setLevelFailed(String levelId, boolean value) {
-        preferences.putBoolean(getLevelFailedKey(levelId), value);
+    public void clearPreferences(String levelId) {
+        preferences.putInteger(getLevelMistakesKey(levelId), 0);
+        preferences.putInteger(getLevelFishIndexKey(levelId), 0);
+        preferences.putBoolean(getLevelFailedKey(levelId), false);
+        preferences.putBoolean(getLevelInProgressKey(levelId), false);
+        preferences.putBoolean(getLevelCompletionKey(levelId), false);
         preferences.flush();
     }
 
     public int getMistakes(String levelId) {
         return preferences.getInteger(getLevelMistakesKey(levelId), 0);
-    }
-
-    public void setFishIndex(String levelId, int value) {
-        preferences.putInteger(getLevelFishIndexKey(levelId), value);
-        preferences.flush();
     }
 
     public int getFishIndex(String levelId) {
@@ -100,6 +111,10 @@ public class LevelManager {
 
     private String getLevelCompletionKey(String levelId) {
         return levelId + ".completed";
+    }
+
+    private String getLevelInProgressKey(String levelId) {
+        return levelId + ".in_progress";
     }
 
     private String getLevelFailedKey(String levelId) {
@@ -186,10 +201,11 @@ public class LevelManager {
         }
 
         Level level = new Level(levelId, conditions, fishIDs);
-        level.setCompleted(isLevelCompleted(levelId));
-        level.setMistakes(isLevelCompleted(levelId) ? getMistakes(levelId) : 0);
+        level.setCompleted(false);
+        level.setMistakes(isLevelInProgress(levelId) ? getMistakes(levelId) : 0);
         level.setFishIndex(getFishIndex(levelId));
         level.setFailed(false);
+        level.setInProgress(isLevelInProgress(levelId));
         this.activelevel = level;
 
         return true;

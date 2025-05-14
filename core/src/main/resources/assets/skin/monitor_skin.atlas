@@ -41,6 +41,10 @@ folder-complete
     rotate: false
     xy: 704, 207
     size: 37, 33
+folder-failed
+    rotate: false
+    xy: 745, 207
+    size: 37, 33
 scrollbar-vertical
     rotate: false
     xy: 784, 0
@@ -113,4 +117,8 @@ temperature-cold
 mistake-icon
     rotate: false
     xy: 816, 160
+    size: 17, 17
+mistake-icon-placeholder
+    rotate: false
+    xy: 833, 160
     size: 17, 17

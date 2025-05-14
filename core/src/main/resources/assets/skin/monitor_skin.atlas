@@ -37,6 +37,10 @@ folder-blocked
     rotate: false
     xy: 614, 237
     size: 37, 33
+folder-complete
+    rotate: false
+    xy: 704, 207
+    size: 37, 33
 scrollbar-vertical
     rotate: false
     xy: 784, 0

@@ -15,14 +15,20 @@ public class Level {
     @Setter
     private boolean completed;
     @Setter
+    private boolean failed;
+    @Setter
     private int mistakes;
+    @Setter
+    private int fishIndex;
 
     public Level(String id, Map<ConditionType, List<String>> conditions, List<String> fishIds) {
         this.id = id;
         this.conditions = conditions;
         this.fishIDs = fishIds;
         this.completed = false;
+        this.failed = false;
         this.mistakes = 0;
+        this.fishIndex = 0;
     }
 
     public boolean meetsConditions(WaterCreature creature) {

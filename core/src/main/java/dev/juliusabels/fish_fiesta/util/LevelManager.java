@@ -64,8 +64,9 @@ public class LevelManager {
 
     public void markLevelCompleted(String levelId, int mistakes) {
         preferences.putBoolean(getLevelCompletionKey(levelId), true);
-        preferences.putInteger(getLevelMistakes(levelId), mistakes);
+        preferences.putInteger(getLevelMistakesKey(levelId), mistakes);
         preferences.flush();
+        setFishIndex(levelId, 0);
     }
 
     public boolean isLevelFailed(String levelId) {
@@ -74,7 +75,8 @@ public class LevelManager {
 
     @SuppressWarnings("GDXJavaMissingFlush")
     public void markLevelFailed(String levelId, int mistakes) {
-        preferences.putInteger(getLevelMistakes(levelId), mistakes);
+        preferences.putInteger(getLevelMistakesKey(levelId), mistakes);
+        setFishIndex(levelId, 0);
         setLevelFailed(levelId, true);
     }
 
@@ -84,7 +86,16 @@ public class LevelManager {
     }
 
     public int getMistakes(String levelId) {
-        return preferences.getInteger(getLevelMistakes(levelId), 0);
+        return preferences.getInteger(getLevelMistakesKey(levelId), 0);
+    }
+
+    public void setFishIndex(String levelId, int value) {
+        preferences.putInteger(getLevelFishIndexKey(levelId), value);
+        preferences.flush();
+    }
+
+    public int getFishIndex(String levelId) {
+        return preferences.getInteger(getLevelFishIndexKey(levelId), 0);
     }
 
     private String getLevelCompletionKey(String levelId) {
@@ -95,8 +106,12 @@ public class LevelManager {
         return levelId + ".failed";
     }
 
-    private String getLevelMistakes(String levelId) {
+    private String getLevelMistakesKey(String levelId) {
         return levelId + ".mistakes";
+    }
+
+    private String getLevelFishIndexKey(String levelId) {
+        return levelId + ".fish_index";
     }
 
     //TODO maybe make use of JsonHelper here as well
@@ -173,7 +188,8 @@ public class LevelManager {
         Level level = new Level(levelId, conditions, fishIDs);
         level.setCompleted(isLevelCompleted(levelId));
         level.setMistakes(isLevelCompleted(levelId) ? getMistakes(levelId) : 0);
-        this.setLevelFailed(levelId, false);
+        level.setFishIndex(getFishIndex(levelId));
+        level.setFailed(false);
         this.activelevel = level;
 
         return true;

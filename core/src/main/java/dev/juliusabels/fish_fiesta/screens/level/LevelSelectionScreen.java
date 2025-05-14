@@ -88,6 +88,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    //TODO if level is complete show overlay to aks if the player wants to replay this level
                     if (levelManager.loadLevelForId(levelId) && levelManager.getActivelevel() != null) {
                         game.setScreen(new LevelScreen(game, levelManager.getActivelevel()));
                     } else {

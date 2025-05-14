@@ -20,7 +20,7 @@ import dev.juliusabels.fish_fiesta.util.ResourceHandler;
 import dev.juliusabels.fish_fiesta.util.TooltipHandler;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Iterator;
+import java.util.List;
 
 @Slf4j
 public class LevelScreen extends FFBaseScreen {
@@ -33,7 +33,9 @@ public class LevelScreen extends FFBaseScreen {
     private final FishManager fishManager;
     private ResourceHandler resourceHandler;
     private final LevelManager levelManager;
-    Iterator<String> fishes;
+    private final List<String> fishes;
+    private final int fishAmount;
+    private int fishIndex;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
@@ -45,12 +47,19 @@ public class LevelScreen extends FFBaseScreen {
         basicTextFont.getData().setScale(0.8F);
         levelStarted = false;
         fishManager = resourceHandler.getFishManager();
-        fishes = currentLevel.getFishIDs().iterator();
+        fishes = currentLevel.getFishIDs();
+        fishAmount = fishes.size();
         levelManager = resourceHandler.getLevelManager();
+        fishIndex = currentLevel.getFishIndex();
     }
 
     public void show() {
         super.show();
+        if (fishIndex == fishAmount) {
+            levelManager.markLevelCompleted(currentLevel.getId(), currentLevel.getMistakes());
+            game.setScreen(new LevelSelectionScreen(game));
+            //TODO add won overlay & sound
+        }
 
         contentTable.clear();
 
@@ -85,8 +94,8 @@ public class LevelScreen extends FFBaseScreen {
             fishcamContent.add(startButton).expand().center();
 
             fishCamWindow.add(fishcamContent).expand().fill().row();
-        } else if (fishes.hasNext()) {
-            String currentFishId = fishes.next();
+        } else if (fishIndex < fishAmount) {
+            String currentFishId = fishes.get(fishIndex);
             log.debug("Get Fish: {}", currentFishId);
             if (fishManager.loadFishForId(currentFishId) && fishManager.getCurrentFish() != null) {
                 Image image = new Image(getFishTexture(currentFishId));
@@ -105,7 +114,8 @@ public class LevelScreen extends FFBaseScreen {
                             currentLevel.increaseMistakes();
                             checkForLevelFail();
                         }
-                        if (!levelManager.isLevelFailed(currentLevel.getId())) {
+                        if (!currentLevel.isFailed()) {
+                            fishIndex++;
                             show();
                         }
                     }
@@ -124,7 +134,8 @@ public class LevelScreen extends FFBaseScreen {
 
                         }
 
-                        if (!levelManager.isLevelFailed(currentLevel.getId())) {
+                        if (!currentLevel.isFailed()) {
+                            fishIndex++;
                             show();
                         }
 
@@ -173,6 +184,7 @@ public class LevelScreen extends FFBaseScreen {
         if (this.currentLevel.getMistakes() >= 3) {
             log.info("Failed Level: {}", this.currentLevel.getId());
             levelManager.markLevelFailed(this.currentLevel.getId(), this.currentLevel.getMistakes());
+            //TODO add Game over screen and sound
             game.setScreen(new LevelSelectionScreen(game));
         }
     }
@@ -180,13 +192,13 @@ public class LevelScreen extends FFBaseScreen {
     //TODO For level screen we want "continue playing", "exit to level selection", "safe level state", "restart level"
     private void showExitDialog() {
         exitDialog.showButtons(
-            new DialogButton("Continue") {
+            new DialogButton("Resume") {
                 @Override
                 public void run() {
-                    //Do nothing
+                    //Do nothing & resume game
                 }
             },
-            new DialogButton("Safe") {
+            new DialogButton("Save") {
                 @Override
                 public void run() {
                     //TODO safe game state here later

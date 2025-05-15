@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TooltipManager;
 
 public class TooltipHandler {
     private final BitmapFont font; //Todo add custom font
-    TextTooltip.TextTooltipStyle style;
-    TooltipManager manager;
+    private TextTooltip.TextTooltipStyle style;
+    private TooltipManager manager;
 
     //todo add background & make font smaller
     public TooltipHandler() {

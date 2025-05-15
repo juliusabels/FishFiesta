@@ -239,7 +239,7 @@ public class  FFBaseScreen implements Screen {
      */
     @Override
     public void show() {
-        // To be implemented by child classes
+        contentTable.clear();
     }
 
     /**

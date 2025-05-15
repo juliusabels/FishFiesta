@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Null;
 import dev.juliusabels.fish_fiesta.game.level.ConditionType;
 import dev.juliusabels.fish_fiesta.game.level.Level;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -21,6 +22,7 @@ public class LevelManager {
     private final List<String> levelIds = new ArrayList<>();
     private boolean allLevelsFound = false;
 
+    @Setter
     @Getter
     @Null
     private Level activelevel;
@@ -206,7 +208,7 @@ public class LevelManager {
         level.setFishIndex(getFishIndex(levelId));
         level.setFailed(false);
         level.setInProgress(isLevelInProgress(levelId));
-        this.activelevel = level;
+        this.setActivelevel(level);
 
         return true;
     }

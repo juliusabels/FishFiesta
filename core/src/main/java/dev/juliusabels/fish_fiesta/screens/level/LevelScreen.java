@@ -52,6 +52,7 @@ public class LevelScreen extends FFBaseScreen {
         fishIndex = currentLevel.getFishIndex();
     }
 
+    //TODO font for cam text etc
     public void show() {
         super.show();
         if (fishIndex == fishAmount) {
@@ -59,8 +60,6 @@ public class LevelScreen extends FFBaseScreen {
             game.setScreen(new LevelSelectionScreen(game));
             //TODO add won overlay & sound
         }
-
-        contentTable.clear();
 
         Table mistakes = new Table();
         Label mistakeText = new Label("Mistakes: ", new Label.LabelStyle(basicTextFont, Color.BLACK));
@@ -200,6 +199,7 @@ public class LevelScreen extends FFBaseScreen {
                 @Override
                 public void run() {
                     levelManager.safeLevelProgress(currentLevel.getId(), currentLevel.getMistakes(), fishIndex);
+                    showExitDialog();
                 }
             },
             new DialogButton("Exit") {
@@ -234,5 +234,6 @@ public class LevelScreen extends FFBaseScreen {
         super.dispose();
         exitDialog.dispose();
         basicTextFont.dispose();
+        levelManager.setActivelevel(null);
     }
 }

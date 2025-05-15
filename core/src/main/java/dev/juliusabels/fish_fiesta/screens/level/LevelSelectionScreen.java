@@ -36,9 +36,6 @@ public class LevelSelectionScreen extends FFBaseScreen {
     public void show() {
         super.show();
 
-        // Clear existing content
-        contentTable.clear();
-
         // Create a table for level folders with wrapping
         Table levelsTable = new Table();
         levelsTable.top().left(); // Align to top-left

@@ -14,10 +14,7 @@ import dev.juliusabels.fish_fiesta.game.level.Level;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
-import dev.juliusabels.fish_fiesta.util.FishManager;
-import dev.juliusabels.fish_fiesta.util.LevelManager;
-import dev.juliusabels.fish_fiesta.util.ResourceHandler;
-import dev.juliusabels.fish_fiesta.util.TooltipHandler;
+import dev.juliusabels.fish_fiesta.util.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -35,6 +32,7 @@ public class LevelScreen extends FFBaseScreen {
     private final List<String> fishes;
     private final int fishAmount;
     private int fishIndex;
+    private final FishFontBig fishFontBig;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
@@ -44,6 +42,7 @@ public class LevelScreen extends FFBaseScreen {
         tooltipHandler = new TooltipHandler();
         basicTextFont = new BitmapFont();
         basicTextFont.getData().setScale(0.8F);
+        fishFontBig = new FishFontBig(game);
         levelStarted = false;
         fishManager = resourceHandler.getFishManager();
         fishes = currentLevel.getFishIDs();
@@ -52,7 +51,6 @@ public class LevelScreen extends FFBaseScreen {
         fishIndex = currentLevel.getFishIndex();
     }
 
-    //TODO font for cam text etc
     public void show() {
         super.show();
         if (fishIndex == fishAmount) {
@@ -62,13 +60,14 @@ public class LevelScreen extends FFBaseScreen {
         }
 
         Table mistakes = new Table();
-        Label mistakeText = new Label("Mistakes: ", new Label.LabelStyle(basicTextFont, Color.BLACK));
-        mistakes.add(mistakeText).space(5);
+        mistakes.background(this.monitorSkin.getDrawable("mistake-bg"));
+        Label mistakeText = fishFontBig.createLabel("Mistakes: ", 1.0F);
+        mistakes.add(mistakeText).space(5).padBottom(3);
         if (this.currentLevel.getMistakes() > 0) {
             Table icons = new Table();
             for (int i = 0; i < currentLevel.getMistakes(); i++) {
                 Image mistakeIcon = new Image(this.monitorSkin.getDrawable("mistake-icon"));
-                icons.add(mistakeIcon).space(5);
+                icons.add(mistakeIcon).space(5).padBottom(3);
             }
             mistakes.add(icons);
         }
@@ -77,6 +76,9 @@ public class LevelScreen extends FFBaseScreen {
 
         Table fishCamWindow = new Table();
         fishCamWindow.background(this.monitorSkin.getDrawable("fishcam-window"));
+
+        Label fishcamTitle = fishFontBig.createLabel("Fish Cam", 1.1f);
+        fishCamWindow.add(fishcamTitle).top().padTop(5).padLeft(4).left().row();
 
         Table fishcamContent = new Table();
 
@@ -148,12 +150,14 @@ public class LevelScreen extends FFBaseScreen {
 
         contentTable.add(fishCamWindow).expand().left().padLeft(60).padBottom(160);
 
-        //TODO make all sprites bigger including window sprite
+        // For the guest list window
         Table guestListWindow = new Table();
         guestListWindow.background(this.monitorSkin.getDrawable("guestlist-window"));
 
+        Label guestListTitle = fishFontBig.createLabel("Room Conditions", 1.1f);
+        guestListWindow.add(guestListTitle).top().padTop(5).padLeft(4).left().row();
+
         Table conditions = new Table();
-        conditions.setFillParent(true);
 
         this.currentLevel.getConditions().forEach((type, values) -> {
             if (type == ConditionType.SIZE && !values.isEmpty()) {
@@ -161,19 +165,19 @@ public class LevelScreen extends FFBaseScreen {
                 for (String value : values) {
                     Image image = new Image(this.monitorSkin.getDrawable("fish_size-" + value.toLowerCase()));
                     tooltipHandler.appendTooltip(value.toLowerCase() + " fish", image);
-                    size.add(image).padTop(20).space(5).left();
+                    size.add(image).space(5);
                 }
-                conditions.add(size).expandX().left().padRight(90).row();
+                conditions.add(size).left().padTop(20).row();
             }
-            conditions.row().space(5);
 
             if (type == ConditionType.TEMPERATURE && !values.isEmpty()) {
                 Image image = new Image(this.monitorSkin.getDrawable("temperature-" + values.getFirst().toLowerCase()));
                 tooltipHandler.appendTooltip(values.getFirst().toLowerCase(), image);
-                conditions.add(image).left().row();
+                conditions.add(image).left().padTop(10).row();
             }
         });
-        guestListWindow.add(conditions);
+
+        guestListWindow.add(conditions).expand().fill().top().padLeft(10).padTop(5);
 
         contentTable.add(guestListWindow).expand().right().padRight(20).padBottom(100);
     }
@@ -234,6 +238,7 @@ public class LevelScreen extends FFBaseScreen {
         super.dispose();
         exitDialog.dispose();
         basicTextFont.dispose();
+        fishFontBig.dispose();
         levelManager.setActivelevel(null);
     }
 }

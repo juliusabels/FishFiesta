@@ -72,8 +72,8 @@ public class LevelSelectionScreen extends FFBaseScreen {
             Label levelName = new Label(levelId.replace("level", ""), new Label.LabelStyle(font, Color.BLACK));
             levelCell.add(levelName).row();
 
-            //TODO also add icon for inProgress & for locked
-            String folderSuffix = levelManager.isLevelCompleted(levelId) ? "-complete" : levelManager.isLevelFailed(levelId) ? "-failed" : "";
+            //TODO also add icon for inProgress
+            String folderSuffix = levelManager.isLevelCompleted(levelId) ? "-complete" : levelManager.isLevelFailed(levelId) ? "-failed" : levelManager.isLevelInProgress(levelId) ? "-inProgress" : "";
 
             Button.ButtonStyle style = new Button.ButtonStyle(
                 monitorSkin.getDrawable("folder" + folderSuffix),

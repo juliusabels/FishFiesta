@@ -1,0 +1,6 @@
+journal_skin.png
+size: 1024, 1024
+repeat: none
+background
+  xy: 0, 0
+  size: 582, 400

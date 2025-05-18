@@ -30,8 +30,6 @@ public class DialogOverlay {
         // Set semi-transparent background
         overlayTable.setBackground(game.getResourceHandler().getMonitorSkin().newDrawable("white", new Color(0, 0, 0, 0.2F)));
 
-
-
         stage.addActor(overlayTable);
     }
 

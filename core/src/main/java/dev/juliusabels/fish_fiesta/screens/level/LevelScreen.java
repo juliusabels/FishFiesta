@@ -2,6 +2,7 @@ package dev.juliusabels.fish_fiesta.screens.level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,7 @@ import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.game.level.ConditionType;
 import dev.juliusabels.fish_fiesta.game.level.Level;
 import dev.juliusabels.fish_fiesta.screens.FFBaseScreen;
+import dev.juliusabels.fish_fiesta.screens.journal.JournalOverlay;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogButton;
 import dev.juliusabels.fish_fiesta.screens.overlay.DialogOverlay;
 import dev.juliusabels.fish_fiesta.util.*;
@@ -33,6 +35,7 @@ public class LevelScreen extends FFBaseScreen {
     private final int fishAmount;
     private int fishIndex;
     private final FishFontBig fishFontBig;
+    private JournalOverlay journal;
 
     public LevelScreen(FishFiestaGame game, Level currentLevel) {
         super(game);
@@ -49,6 +52,11 @@ public class LevelScreen extends FFBaseScreen {
         fishAmount = fishes.size();
         levelManager = resourceHandler.getLevelManager();
         fishIndex = currentLevel.getFishIndex();
+        journal = new JournalOverlay(game, stage, contentTable);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(journal.getJournalKeyListener());
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     public void show() {
@@ -221,12 +229,14 @@ public class LevelScreen extends FFBaseScreen {
 
         // If back key pressed, show dialog instead of immediate exit. If pressed again close dialog window again
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            if (!exitDialog.isVisible()) {
+            if (!exitDialog.isVisible() && !journal.isVisible()) {
                 showExitDialog();
-            } else {
+            } else if (!journal.isVisible()) {
                 exitDialog.hide();
             }
         }
+
+        journal.render(delta);
     }
 
     public TextureRegion getFishTexture(String fishId) {
@@ -240,5 +250,6 @@ public class LevelScreen extends FFBaseScreen {
         basicTextFont.dispose();
         fishFontBig.dispose();
         levelManager.setActivelevel(null);
+        journal.dispose();
     }
 }

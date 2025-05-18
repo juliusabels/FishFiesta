@@ -22,6 +22,7 @@ public class ResourceHandler {
 
     private static final String BACKGROUND_TEXTURE = assetFile("background.png");
     private static final String MONITOR_SKIN = assetFile("skin/monitor_skin.json");
+    private static final String JOURNAL_SKIN = assetFile("skin/journal_skin.json");
     private static final String FISH_FONT_BIG = assetFile("font/fish_font_big.fnt");
     private static final String FISH_SPRITES = assetFile("fishes/fishes.atlas");
 
@@ -35,6 +36,7 @@ public class ResourceHandler {
         log.info("Start loading assets");
         assetManager.load(BACKGROUND_TEXTURE, Texture.class);
         assetManager.load(MONITOR_SKIN, Skin.class, new SkinLoader.SkinParameter());
+        assetManager.load(JOURNAL_SKIN, Skin.class, new SkinLoader.SkinParameter());
         assetManager.load(FISH_FONT_BIG, BitmapFont.class);
         assetManager.load(FISH_SPRITES, TextureAtlas.class);
 
@@ -51,6 +53,10 @@ public class ResourceHandler {
 
     public Skin getMonitorSkin() {
         return assetManager.get(MONITOR_SKIN);
+    }
+
+    public Skin getJournalSkin() {
+        return assetManager.get(JOURNAL_SKIN);
     }
 
     public BitmapFont getFishFontBig() {

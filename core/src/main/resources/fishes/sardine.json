@@ -1,0 +1,9 @@
+{
+  "description": "Sardines are small, silvery, elongated fishes with a single short dorsal fin, no lateral line, and no scales on the head.",
+  "notableFeatures": "Sardines live in schools and are most well known for being inexpensive and tasty.",
+  "minSize": 20,
+  "maxSize": 30,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["open_ocean", "coast"],
+  "waterTemperatures": ["medium"]
+}

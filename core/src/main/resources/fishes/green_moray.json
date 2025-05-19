@@ -1,0 +1,9 @@
+{
+  "description": "The green moray eel belongs to the Muraenidae family, a group of long, snake-like fish often referred to simply as moray eels. Despite its name, the green moray’s skin is not green; it’s actually brown, but a yellowish mucus covering gives it its greenish hue.",
+  "notableFeatures": "See that thing in the reef with the big shiny teeth, that's a moray....When its jaws open wide and there's more jaws inside, that's a moray...If an eel bites your toe and it just won't let go, that's a moray!... He can swim, he can dive but he'd rather hide in the coral...Put your hand in the crack and you wont get it back from a moray...",
+  "minSize": 250,
+  "maxSize": 250,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coast", "coral_reef"],
+  "waterTemperatures": ["warm", "medium"]
+}

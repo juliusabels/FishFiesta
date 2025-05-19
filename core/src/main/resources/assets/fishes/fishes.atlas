@@ -25,3 +25,39 @@ common_coral_trout
 atlantic_mackerel
     xy: 448, 0
     size: 64, 64
+common_fangtooth
+    xy: 512, 0
+    size: 64, 64
+discus
+    xy: 576, 0
+    size: 64, 64
+gilt_head_bream
+    xy: 640, 0
+    size: 64, 64
+green_moray
+    xy: 704, 0
+    size: 64, 64
+humpback_whale
+    xy: 768, 0
+    size: 64, 64
+parrotfish
+    xy: 832, 0
+    size: 64, 64
+piranha
+    xy: 896, 0
+    size: 64, 64
+red_tail_catfish
+    xy: 960, 0
+    size: 64, 64
+regal_blue_tang
+    xy: 0, 64
+    size: 64, 64
+sardine
+    xy: 64, 64
+    size: 64, 64
+sturgeon
+    xy: 128, 64
+    size: 64, 64
+arbiter_snailfish
+    xy: 192, 64
+    size: 64, 64

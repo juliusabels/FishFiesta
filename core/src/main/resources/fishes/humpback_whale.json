@@ -1,0 +1,9 @@
+{
+  "description": "The body is black on the upper surface, with a variable amount of white below, and it has about 30 broad ventral grooves on the throat and chest",
+  "notableFeatures": "The most vocal of all whales, humpbacks make a great variety of sounds, from moans and cries to groans and snores.",
+  "minSize": 1200,
+  "maxSize": 1600,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["open_ocean"],
+  "waterTemperatures": ["cold", "warm", "medium"]
+}

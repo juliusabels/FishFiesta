@@ -1,0 +1,9 @@
+{
+  "description": "Generally, they have elongated bodies with a distinctive torpedo shape, which allows them to navigate through water with ease. Their skin is covered with tough, bony plates called scutes instead of traditional scales, providing them with protection against predators. The coloration of sturgeons varies by species, ranging from grayish-blue to olive or brown, which helps them blend into their aquatic environments.",
+  "notableFeatures": "Strugeons vary greatly in size and species. The largest one caught in North Amerca was 7.2 meters long. Sturgeons are kept by humans so we can harvest their eggs which will be consumed as caviar.",
+  "minSize": 50,
+  "maxSize": 700,
+  "waterTypes": ["salt", "fresh"],
+  "waterSubtypes": ["lake", "river", "coast"],
+  "waterTemperatures": ["medium"]
+}

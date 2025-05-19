@@ -1,0 +1,9 @@
+{
+  "description": "Piranhas have a robust, narrow body, a blunt head, and strong jaws with triangular-shaped, razor sharp teeth. Piranhas tend to be silvery with red-pigmented patches.",
+  "notableFeatures": "When resting it will hold tight to rocks, with suction-cup fins on its belly",
+  "minSize": 20,
+  "maxSize": 30,
+  "waterTypes": ["fresh"],
+  "waterSubtypes": ["river"],
+  "waterTemperatures": ["warm"]
+}

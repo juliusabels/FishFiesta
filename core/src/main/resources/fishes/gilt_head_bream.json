@@ -1,0 +1,9 @@
+{
+  "description": "With a metallic sheen and a chunky profile the gilthead bream is an unmistakable fish.",
+  "notableFeatures": "The gilt-head bream is generally considered the best tasting of the breams. It is the single species of the genus Sparus – the Latin name for this fish – which has given the whole family of Sparidae its name. Its specific name, aurata, derives from the gold bar marking between its eyes.",
+  "minSize": 35,
+  "maxSize": 35,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coast"],
+  "waterTemperatures": ["cold"]
+}

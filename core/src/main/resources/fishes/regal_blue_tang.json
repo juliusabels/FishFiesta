@@ -1,0 +1,9 @@
+{
+  "description": "It has a distinctive blue-colored body with a yellow tail and fins, and a black band running horizontally across its body.",
+  "notableFeatures": "Mostly well known for their role in \"Finding Nemo\" as Dory, these gorgeous blue fish are important parts of their ecosystem. Living in schools of other fish even extending to other species they keep Coral Reefs clean.",
+  "minSize": 12,
+  "maxSize": 38,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coral_reef"],
+  "waterTemperatures": ["warm"]
+}

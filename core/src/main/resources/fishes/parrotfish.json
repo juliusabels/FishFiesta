@@ -1,0 +1,9 @@
+{
+  "description": "Parrotfish can be variations of red, green, blue, yellow, gray, brown or black.  Males and females of the same species generally look quite different. They have fused teeth that form beaklike plates, giving them a parrotlike appearance.",
+  "notableFeatures": "They have large thick scales that, in some species, are strong enough to stop a spear. The parrotfish plays an important role in the growth of the coral reef because it feeds on algae that would otherwise smother the coral.",
+  "minSize": 30,
+  "maxSize": 120,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["coral_reef"],
+  "waterTemperatures": ["warm"]
+}

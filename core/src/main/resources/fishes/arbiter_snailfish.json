@@ -1,0 +1,9 @@
+{
+  "description": "Snailfish are scaleless with a thin, loose gelatinous skin.",
+  "notableFeatures": "When resting it will hold tight to rocks, with suction-cup fins on its belly",
+  "minSize": 17,
+  "maxSize": 17,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["deepsea"],
+  "waterTemperatures": ["cold"]
+}

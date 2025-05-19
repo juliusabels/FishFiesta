@@ -1,0 +1,9 @@
+{
+  "description": "A common fangtooth has thin large teeth and an even larger mouth.",
+  "notableFeatures": "When a fish or shrimp swims nearby, a common fangtooth simply opens its big mouth and sucks the animal inside. Animals caught in its trap have little chance of wriggling free.",
+  "minSize": 15,
+  "maxSize": 15,
+  "waterTypes": ["salt"],
+  "waterSubtypes": ["deepsea"],
+  "waterTemperatures": ["cold"]
+}

@@ -52,10 +52,11 @@ public class LevelScreen extends FFBaseScreen {
         fishAmount = fishes.size();
         levelManager = resourceHandler.getLevelManager();
         fishIndex = currentLevel.getFishIndex();
-        journal = new JournalOverlay(game, stage, contentTable);
+        journal = new JournalOverlay(game, contentTable, stage);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(journal.getJournalKeyListener());
+        inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(journal.getJournalInputProcessor());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -235,8 +236,6 @@ public class LevelScreen extends FFBaseScreen {
                 exitDialog.hide();
             }
         }
-
-        journal.render(delta);
     }
 
     public TextureRegion getFishTexture(String fishId) {

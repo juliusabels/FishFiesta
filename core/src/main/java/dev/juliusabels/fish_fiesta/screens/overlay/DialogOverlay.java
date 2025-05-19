@@ -7,19 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
-import dev.juliusabels.fish_fiesta.screens.MainMenuScreen;
 import dev.juliusabels.fish_fiesta.util.FishFontBig;
 
 public class DialogOverlay {
     private final FishFiestaGame game;
     private final Table overlayTable;
     private final FishFontBig font;
-    private Table lowerTable; //todo rename this wtf
+    private Table activeScreenTable;
 
-    public DialogOverlay(FishFiestaGame game, Stage stage, Table lowerTable) {
+    public DialogOverlay(FishFiestaGame game, Stage stage, Table activeScreenTable) {
         this.game = game;
         this.font = new FishFontBig(game);
-        this.lowerTable = lowerTable;
+        this.activeScreenTable = activeScreenTable;
 
         // Create overlay container
         overlayTable = new Table();
@@ -34,7 +33,7 @@ public class DialogOverlay {
     }
 
     public void showButtons(DialogButton... buttons) {
-        this.lowerTable.setTouchable(Touchable.disabled);
+        this.activeScreenTable.setTouchable(Touchable.disabled);
         // Create dialog box
         Table dialogBox = new Table();
         dialogBox.pad(20);
@@ -68,7 +67,7 @@ public class DialogOverlay {
 
     public void hide() {
         overlayTable.setVisible(false);
-        this.lowerTable.setTouchable(Touchable.enabled);
+        this.activeScreenTable.setTouchable(Touchable.enabled);
     }
 
     public boolean isVisible() {

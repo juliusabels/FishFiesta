@@ -1,0 +1,9 @@
+{
+  "description": "This striking catfish sports a bright-red tail. It is in high demand as an aquarium fish, possibly because of its unique face. However, as it can grow to be quite large, caring for it requires considerable work. It is called pirarara in Brazil, where it can often be found.",
+  "notableFeatures": "The Red-tailed Catfish is easily recognized and one of the most attractive of the catfish species.",
+  "minSize": 135,
+  "maxSize": 135,
+  "waterTypes": ["fresh"],
+  "waterSubtypes": ["river", "lake"],
+  "waterTemperatures": ["medium"]
+}

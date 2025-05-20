@@ -44,7 +44,7 @@ public class LevelScreen extends FFBaseScreen {
         exitDialog = new DialogOverlay(game, stage, contentTable);
         tooltipHandler = new TooltipHandler();
         basicTextFont = new BitmapFont();
-        basicTextFont.getData().setScale(0.8F);
+        basicTextFont.getData().setScale(0.5F);
         fishFontBig = new FishFontBig(game);
         levelStarted = false;
         fishManager = resourceHandler.getFishManager();
@@ -62,10 +62,9 @@ public class LevelScreen extends FFBaseScreen {
 
     public void show() {
         super.show();
-        if (fishIndex == fishAmount) {
+        if (fishIndex == fishAmount && currentLevel.getMistakes() != 3) {
             levelManager.markLevelCompleted(currentLevel.getId(), currentLevel.getMistakes());
             game.setScreen(new LevelSelectionScreen(game));
-            //TODO add won overlay & sound
         }
 
         Table mistakes = new Table();
@@ -159,7 +158,6 @@ public class LevelScreen extends FFBaseScreen {
 
         contentTable.add(fishCamWindow).expand().left().padLeft(60).padBottom(160);
 
-        // For the guest list window
         Table guestListWindow = new Table();
         guestListWindow.background(this.monitorSkin.getDrawable("guestlist-window"));
 
@@ -167,26 +165,43 @@ public class LevelScreen extends FFBaseScreen {
         guestListWindow.add(guestListTitle).top().padTop(5).padLeft(4).left().row();
 
         Table conditions = new Table();
+        conditions.left().top();
+
+        this.currentLevel.getConditions().forEach((type, values) -> {
+            if (type != ConditionType.SIZE && type != ConditionType.TEMPERATURE && !values.isEmpty()) {
+                String typeName = FishManager.formatIdToName(type.name().toLowerCase()) + ": ";
+                StringBuilder builder = new StringBuilder();
+                int valuesSize = values.size() - 1;
+                for (int i = 0; i <= valuesSize; i++) {
+                    builder.append(values.get(i));
+                    if (i != valuesSize) {
+                        builder.append(", ");
+                    }
+                }
+                String formattedValues = FishManager.formatIdToName(builder.toString());
+                Label label = fishFontBig.createLabel(typeName + formattedValues, 0.7F, Color.BLACK);
+                conditions.add(label).left().fillX().padTop(10).row();
+            }
+        });
 
         this.currentLevel.getConditions().forEach((type, values) -> {
             if (type == ConditionType.SIZE && !values.isEmpty()) {
                 Table size = new Table();
+                size.left();
                 for (String value : values) {
                     Image image = new Image(this.monitorSkin.getDrawable("fish_size-" + value.toLowerCase()));
                     tooltipHandler.appendTooltip(value.toLowerCase() + " fish", image);
-                    size.add(image).space(5);
+                    size.add(image).left().space(5);
                 }
                 conditions.add(size).left().padTop(20).row();
-            }
-
-            if (type == ConditionType.TEMPERATURE && !values.isEmpty()) {
+            } else if (type == ConditionType.TEMPERATURE && !values.isEmpty()) {
                 Image image = new Image(this.monitorSkin.getDrawable("temperature-" + values.getFirst().toLowerCase()));
                 tooltipHandler.appendTooltip(values.getFirst().toLowerCase(), image);
                 conditions.add(image).left().padTop(10).row();
             }
         });
 
-        guestListWindow.add(conditions).expand().fill().top().padLeft(10).padTop(5);
+        guestListWindow.add(conditions).expand().fill().top().left().padLeft(10).padTop(5);
 
         contentTable.add(guestListWindow).expand().right().padRight(20).padBottom(100);
     }
@@ -195,7 +210,6 @@ public class LevelScreen extends FFBaseScreen {
         if (this.currentLevel.getMistakes() >= 3) {
             log.info("Failed Level: {}", this.currentLevel.getId());
             levelManager.markLevelFailed(this.currentLevel.getId(), this.currentLevel.getMistakes());
-            //TODO add Game over screen and sound
             game.setScreen(new LevelSelectionScreen(game));
         }
     }

@@ -16,6 +16,14 @@ Quellen:
 - Fish cam niderlande ref
 - libgdx
 
+Planned additions:
+- Won & Loose Screen & Sound
+- I changed the contentTable padding, check if level selection still works with >41 levels
+- Fix Scrollbar on level selection
+- Custom font for tooltips
+- Background texture for tooltips
+- Add new font for simple text which has punctuation and lowercase letters (big fish font is meant to be Titles only)
+
 Layout:
 1. Main Menu
    - Start Game

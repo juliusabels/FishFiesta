@@ -3,11 +3,7 @@ package dev.juliusabels.fish_fiesta.game;
 import dev.juliusabels.fish_fiesta.game.features.SizeCategory;
 import lombok.Getter;
 
-@Getter
-public final class CreatureSize {
-    private final int rangeStart;
-    private final int rangeEnd;
-
+public record CreatureSize(int rangeStart, int rangeEnd) {
     public CreatureSize(int rangeStart, int rangeEnd) {
         if (rangeStart == 0 || rangeEnd == 0) {
             this.rangeStart = 0;
@@ -35,5 +31,9 @@ public final class CreatureSize {
 
     public int getAverageSize() {
         return (rangeStart + rangeEnd) / 2;
+    }
+
+    public boolean isValid() {
+        return getCategoriesFromSize() != SizeCategory.UNDEFINED;
     }
 }

@@ -2,6 +2,8 @@ package dev.juliusabels.fish_fiesta.screens.journal;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -27,25 +29,28 @@ public class JournalOverlay {
     private final FishFontBig fishFont;
     private final FishManager fishManager;
     private final Table activeScreenTable;
+    private final BitmapFont regularFont;
+    private final Skin journalSkin;
 
     private final Table journalTable;
-    private final Table indexPage;
     private final Map<String, Table> fishPages = new HashMap<>();
 
     @Getter
     private boolean isVisible = false;
 
     private int currentPage = 0;
-    private final int fishPerPage = 14;
-    private final int fishPerColumn = 7;
+    private static final int fishPerPage = 14;
+    private static final int fishPerColumn = 7;
 
     public JournalOverlay(FishFiestaGame game, Table activeScreenTable, Stage mainStage) {
         this.game = game;
         this.fishManager = game.getResourceHandler().getFishManager();
         this.fishFont = new FishFontBig(game);
+        this.regularFont = new BitmapFont();
+        this.regularFont.getData().setScale(0.8F);
         this.activeScreenTable = activeScreenTable;
 
-        Skin journalSkin = game.getResourceHandler().getJournalSkin();
+        journalSkin = game.getResourceHandler().getJournalSkin();
 
         // Create journal container
         journalTable = new Table();
@@ -58,9 +63,6 @@ public class JournalOverlay {
         backgroundTable.setBackground(journalSkin.getDrawable("background"));
         // Set fixed size to match texture dimensions
         backgroundTable.setSize(582, 400);
-
-        // Create index page once for better performance
-        indexPage = createIndexPage();
 
         // Add background and content to main journal table
         journalTable.add(backgroundTable).size(582, 400);
@@ -83,28 +85,29 @@ public class JournalOverlay {
         }
     }
 
-
     private Table createIndexPage() {
         Table content = new Table();
 
-        // Title
-        Label titleLabel = fishFont.createLabel("FISH INDEX", 1.2f);
+        Table fixedContainer = new Table();
+        fixedContainer.setSize(582, 400);
+
+        Label titleLabel = fishFont.createLabel("Fish Index", 1.2f);
         titleLabel.setColor(Color.BLACK);
-        content.add(titleLabel).colspan(2).padTop(40).padBottom(20).row();
+        titleLabel.setPosition(60, 370);
+        fixedContainer.addActor(titleLabel);
 
-        // Get all fish IDs
-        List<String> fishIds = fishManager.getAllFishIds();
-        int totalPages = (int)Math.ceil(fishIds.size() / (float)fishPerPage);
+        Table columnsTable = new Table();
+        columnsTable.setPosition(45, 70);
+        columnsTable.setSize(492, 260);
 
-        // Get current page's fish
-        int startIdx = currentPage * fishPerPage;
-        int endIdx = Math.min(startIdx + fishPerPage, fishIds.size());
-
-        // Create left and right columns
         Table leftColumn = new Table();
         Table rightColumn = new Table();
 
-        // Fill columns with fish entries
+        List<String> fishIds = fishManager.getAllFishIds();
+        int totalPages = (int)Math.ceil(fishIds.size() / (float)fishPerPage);
+        int startIdx = currentPage * fishPerPage;
+        int endIdx = Math.min(startIdx + fishPerPage, fishIds.size());
+
         for (int i = startIdx; i < endIdx; i++) {
             String fishId = fishIds.get(i);
             Table fishEntry = new Table();
@@ -123,7 +126,6 @@ public class JournalOverlay {
             nameLabel.setColor(Color.BLACK);
             fishEntry.add(nameLabel).expandX().left();
 
-            // Add click listener for fish page navigation
             fishEntry.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -140,21 +142,16 @@ public class JournalOverlay {
             }
         }
 
-        // Add columns to content with 80px space between them
-        Table columnsTable = new Table();
-        columnsTable.add(leftColumn).width(240);
-        columnsTable.add().width(80); // Space between columns
-        columnsTable.add(rightColumn).width(240);
+        columnsTable.add(leftColumn).width(230);
+        columnsTable.add().width(80);
+        columnsTable.add(rightColumn).width(230);
+        fixedContainer.addActor(columnsTable);
 
-        content.add(columnsTable).expand().fill().row();
-
-        // Add pagination controls if needed
         if (totalPages > 1) {
-            Table paginationTable = new Table();
-
-            // Previous page button
             if (currentPage > 0) {
-                TextButton prevButton = new TextButton("<", game.getResourceHandler().getMonitorSkin());
+                Button prevButton = new Button(new Button.ButtonStyle(journalSkin.getDrawable("button_left"), journalSkin.getDrawable("button_left-pressed"), null));
+                prevButton.sizeBy(3);
+                prevButton.setPosition(50, 30);
                 prevButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -162,19 +159,20 @@ public class JournalOverlay {
                         showIndexPage();
                     }
                 });
-                paginationTable.add(prevButton).left().padBottom(20);
-            } else {
-                paginationTable.add().width(40); // Placeholder for alignment
+                fixedContainer.addActor(prevButton);
             }
 
             // Page indicator
             Label pageLabel = fishFont.createLabel((currentPage + 1) + "/" + totalPages, 0.9f);
             pageLabel.setColor(Color.BLACK);
-            paginationTable.add(pageLabel).width(100).center();
+            pageLabel.setPosition(275, 30);
+            fixedContainer.addActor(pageLabel);
 
-            // Next page button
+            // Next button (right side)
             if (currentPage < totalPages - 1) {
-                TextButton nextButton = new TextButton(">", game.getResourceHandler().getMonitorSkin());
+                Button nextButton = new Button(new Button.ButtonStyle(journalSkin.getDrawable("button_right"), journalSkin.getDrawable("button_right-pressed"), null));
+                nextButton.sizeBy(3);
+                nextButton.setPosition(500, 30);
                 nextButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -182,19 +180,20 @@ public class JournalOverlay {
                         showIndexPage();
                     }
                 });
-                paginationTable.add(nextButton).right().padBottom(20);
-            } else {
-                paginationTable.add().width(40); // Placeholder for alignment
+                fixedContainer.addActor(nextButton);
             }
-
-            content.add(paginationTable).expandX().fillX().padBottom(30).padTop(10);
         }
 
+        content.add(fixedContainer).size(582, 400);
         return content;
     }
 
     private Table createFishPage(String fishId) {
         Table content = new Table();
+
+        // Create a container with fixed dimensions
+        Table fixedContainer = new Table();
+        fixedContainer.setSize(582, 400);
 
         // Load fish data
         if (!fishManager.loadFishForId(fishId)) {
@@ -208,82 +207,81 @@ public class JournalOverlay {
             return content;
         }
 
-        // Fish title/name
+        Table leftPage = new Table();
+        leftPage.setPosition(45, 50);
+
         Label titleLabel = fishFont.createLabel(fish.getName(), 1.2f);
         titleLabel.setColor(Color.BLACK);
-        content.add(titleLabel).colspan(2).padBottom(20).row();
+        titleLabel.setPosition(0, 300);
+        leftPage.addActor(titleLabel);
 
-        // Fish image
+        // Get fish texture
         TextureRegion fishTexture = game.getResourceHandler().getFishSprites().findRegion(fishId);
         if (fishTexture != null) {
+            // Define sizes
+            float frameSize = 137;
+            float fishSize = 64;
+
+            // Calculate positions
+            float centerX = (271 - frameSize) / 2;
+            float positionY = 100;
+
+            // Calculate offsets to center fish within frame
+            float fishOffsetX = (frameSize - fishSize) / 2;
+            float fishOffsetY = (frameSize - fishSize) / 2;
+
+            // Create the fish image
             Image fishImage = new Image(fishTexture);
-            content.add(fishImage).colspan(2).size(120, 120).padBottom(20).row();
+            fishImage.setSize(fishSize * 1.5F, fishSize * 1.5F);
+            fishImage.setPosition(centerX + fishOffsetX - 66, positionY + fishOffsetY - 18);
+
+            // Create the frame image
+            Image frameImage = new Image(game.getResourceHandler().getJournalSkin().getDrawable("fish_frame"));
+            frameImage.setSize(frameSize, frameSize);
+            frameImage.setPosition(centerX - 50, positionY);
+
+            // Add both to left page (fish first, then frame on top)
+            leftPage.addActor(fishImage);
+            leftPage.addActor(frameImage);
         }
 
-        // Fish details
-        addDetailRow(content, "Size:", fish.getSize().toString());
+        Table rightPage = new Table();
+        rightPage.setPosition(300, 50);
+        rightPage.top().left(); // Align to top-left
+        rightPage.setSize(240, 330);
 
-        if (!fish.getWaterTypes().isEmpty()) {
-            addDetailRow(content, "Water Type:", fish.getWaterTypes().toString()
-                .replace("[", "").replace("]", ""));
-        }
+        Label descLabel = new Label(JournalDescGenerator.generateFor(fish), new Label.LabelStyle(regularFont, Color.BLACK));
+        descLabel.setColor(Color.BLACK);
+        descLabel.setWrap(true);
+        rightPage.add(descLabel).width(240).top().left().padLeft(32);
 
-        if (!fish.getWaterSubtypes().isEmpty()) {
-            addDetailRow(content, "Habitat:", fish.getWaterSubtypes().toString()
-                .replace("[", "").replace("]", ""));
-        }
-
-        if (!fish.getWaterTemperatures().isEmpty()) {
-            addDetailRow(content, "Temperature:", fish.getWaterTemperatures().toString()
-                .replace("[", "").replace("]", ""));
-        }
-
-        // Description
-        if (fish.getDescription() != null && !fish.getDescription().isEmpty()) {
-            Label descTitle = fishFont.createLabel("Description:", 0.9f);
-            descTitle.setColor(Color.BLACK);
-            content.add(descTitle).colspan(2).left().padTop(15).row();
-
-            Label descLabel = fishFont.createLabel(fish.getDescription(), 0.8f);
-            descLabel.setColor(Color.BLACK);
-            descLabel.setWrap(true);
-            content.add(descLabel).colspan(2).width(400).left().padTop(5).row();
-        }
-
-        // Back button
-        TextButton backButton = new TextButton("Back to Index", game.getResourceHandler().getMonitorSkin());
+        // Back button at bottom
+        Button backButton = new Button(new Button.ButtonStyle(journalSkin.getDrawable("button_left"), journalSkin.getDrawable("button_left-pressed"), null));
+        backButton.sizeBy(3);
+        backButton.setPosition(30, 30);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 showIndexPage();
             }
         });
-        content.add(backButton).colspan(2).padTop(30).row();
 
-        // Add scrollable content
-        ScrollPane scrollPane = new ScrollPane(content);
-        scrollPane.setScrollingDisabled(true, false);
+        // Add all elements to the fixed container
+        fixedContainer.addActor(leftPage);
+        fixedContainer.addActor(rightPage);
+        fixedContainer.addActor(backButton);
 
-        Table pageTable = new Table();
-        pageTable.add(scrollPane).expand().fill().padLeft(60).padRight(60).padTop(30).padBottom(30);
-
-        return pageTable;
+        content.add(fixedContainer).size(582, 400);
+        return content;
     }
 
-    private void addDetailRow(Table table, String label, String value) {
-        Label labelWidget = fishFont.createLabel(label, 0.9f);
-        labelWidget.setColor(Color.BLACK);
-        table.add(labelWidget).left().padRight(10);
-
-        Label valueWidget = fishFont.createLabel(value, 0.9f);
-        valueWidget.setColor(Color.BLACK);
-        table.add(valueWidget).left().expandX().row();
-    }
 
     private void showIndexPage() {
         // Clear current content
         Table backgroundTable = (Table)journalTable.getChild(0);
         backgroundTable.clearChildren();
+
+        Table indexPage = createIndexPage();
 
         // Add index page
         backgroundTable.add(indexPage).expand().fill();
@@ -304,6 +302,7 @@ public class JournalOverlay {
 
     public void dispose() {
         fishFont.dispose();
+        regularFont.dispose();
     }
 
     public InputAdapter getJournalInputProcessor() {

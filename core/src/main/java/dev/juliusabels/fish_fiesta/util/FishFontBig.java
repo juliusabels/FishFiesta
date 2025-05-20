@@ -33,16 +33,28 @@ public class FishFontBig {
      *
      * @param text The text to display
      * @param scale The scale factor for the font
+     * @param color The color of the font
      * @return The created Label
      */
-    public Label createLabel(String text, float scale) {
+    public Label createLabel(String text, float scale, Color color) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
 
         BitmapFont fontCopy = new BitmapFont(font.getData().getFontFile());
         fontCopy.getData().setScale(scale);
         labelStyle.font = fontCopy;
-        labelStyle.fontColor = Color.WHITE;
+        labelStyle.fontColor = color;
         return new Label(text.toUpperCase(), labelStyle);
+    }
+
+    /**
+     * Creates a label with the big fish font and the default font color
+     *
+     * @param text The text to display
+     * @param scale The scale factor for the font
+     * @return The created Label
+     */
+    public Label createLabel(String text, float scale) {
+        return createLabel(text, scale, Color.WHITE);
     }
 
     /**

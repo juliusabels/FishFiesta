@@ -23,6 +23,8 @@ public class LevelSelectionScreen extends FFBaseScreen {
     private final DialogOverlay exitDialog;
     private final LevelManager levelManager;
     private final BitmapFont font;
+    private static final float FOLDER_WIDTH = 40;
+    private static final float FOLDER_HEIGHT = 85;
 
     public LevelSelectionScreen(FishFiestaGame game) {
         super(game);
@@ -31,7 +33,6 @@ public class LevelSelectionScreen extends FFBaseScreen {
         font = new BitmapFont();
     }
 
-    //TODO I changed the contentTable padding, check if this still works with >41 levels
     @Override
     public void show() {
         super.show();
@@ -41,23 +42,18 @@ public class LevelSelectionScreen extends FFBaseScreen {
         levelsTable.top().left(); // Align to top-left
         levelsTable.defaults().pad(10);
 
-        // Increase folder width to a more realistic value
-        float folderWidth = 40; // Adjust based on actual folder size
-        float folderHeight = 85; // Approximate height of each folder cell with padding
-
         // Calculate available space inside the monitor (accounting for contentTable's padding)
         int availableWidth = MONITOR_WIDTH - 255; // 40px padding on left and right
         int availableHeight = MONITOR_HEIGHT - 150; // 40px padding on top and bottom
 
-        int foldersPerRow = (int)(availableWidth / folderWidth);
+        int foldersPerRow = (int)(availableWidth / FOLDER_WIDTH);
 
         // Debug available space
-        log.info("Available space: {}x{}, folder size: {}x{}, folders per row: {}", availableWidth, availableHeight, folderWidth, folderHeight, foldersPerRow);
+        log.info("Available space: {}x{}, folder size: {}x{}, folders per row: {}", availableWidth, availableHeight, FOLDER_WIDTH, FOLDER_HEIGHT, foldersPerRow);
 
         // Get and sort level IDs to ensure proper order
         List<String> sortedLevelIds = new ArrayList<>(levelManager.getAllLevelIds());
         sortedLevelIds.sort((a, b) -> {
-            // Extract level numbers and compare numerically
             int numA = Integer.parseInt(a.replace("level", ""));
             int numB = Integer.parseInt(b.replace("level", ""));
             return Integer.compare(numA, numB);
@@ -72,9 +68,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
             Label levelName = new Label(levelId.replace("level", ""), new Label.LabelStyle(font, Color.BLACK));
             levelCell.add(levelName).row();
 
-            //TODO also add icon for inProgress
             String folderSuffix = levelManager.isLevelCompleted(levelId) ? "-complete" : levelManager.isLevelFailed(levelId) ? "-failed" : levelManager.isLevelInProgress(levelId) ? "-inProgress" : "";
-
             Button.ButtonStyle style = new Button.ButtonStyle(
                 monitorSkin.getDrawable("folder" + folderSuffix),
                 monitorSkin.getDrawable("folder-open"),
@@ -123,7 +117,7 @@ public class LevelSelectionScreen extends FFBaseScreen {
                 icons.add(new Image(this.monitorSkin.getDrawable("mistake-icon-placeholder"))); //Renders an empty area of the size of an icon texture to make the folders align nicely (could this be implemented better? Probably! Do I care? Nope!)
             }
             levelCell.add(icons);
-            levelsTable.add(levelCell).width(folderWidth).height(folderHeight);
+            levelsTable.add(levelCell).width(FOLDER_WIDTH).height(FOLDER_HEIGHT);
 
             currentColumn++;
             if (currentColumn >= foldersPerRow) {
@@ -131,8 +125,6 @@ public class LevelSelectionScreen extends FFBaseScreen {
                 currentColumn = 0;
             }
         }
-
-        //TODO scrollbar can be improved, but it's only required once we reach 41 levels
 
         //Create scroll pane with improved configuration
         ScrollPane scrollPane = new ScrollPane(levelsTable, monitorSkin);

@@ -4,3 +4,18 @@ repeat: none
 background
   xy: 0, 0
   size: 582, 400
+fish_frame
+  xy: 592, 48
+  size: 137, 137
+button_left
+  xy: 592, 0
+  size: 6, 9
+button_left-pressed
+  xy: 592, 10
+  size: 6, 8
+button_right
+  xy: 599, 0
+  size: 6, 9
+button_right-pressed
+  xy: 599, 10
+  size: 6, 8

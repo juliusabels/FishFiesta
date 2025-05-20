@@ -23,6 +23,8 @@ Planned additions:
 - Custom font for tooltips
 - Background texture for tooltips
 - Add new font for simple text which has punctuation and lowercase letters (big fish font is meant to be Titles only)
+- Notable features should only be shown in journal when the fish was correctly sorted once!
+- When closing journal save which page was last visited
 
 Layout:
 1. Main Menu

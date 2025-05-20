@@ -253,7 +253,7 @@ public class JournalOverlay {
         Label descLabel = new Label(JournalDescGenerator.generateFor(fish), new Label.LabelStyle(regularFont, Color.BLACK));
         descLabel.setColor(Color.BLACK);
         descLabel.setWrap(true);
-        rightPage.add(descLabel).width(240).top().left().padLeft(32);
+        rightPage.add(descLabel).width(240).top().left().padLeft(30);
 
         // Back button at bottom
         Button backButton = new Button(new Button.ButtonStyle(journalSkin.getDrawable("button_left"), journalSkin.getDrawable("button_left-pressed"), null));

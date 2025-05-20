@@ -3,7 +3,7 @@
     "water_type": "salt",
     "water_subtype": "coral_reef",
     "temperature": "warm",
-    "size": ["small", "medium"]
+    "size": ["small", "medium", "big"]
   },
-  "fishIDs": ["clownfish", "sockeye_salmon", "atlantic_tuna", "asian_carp"]
+  "fishIDs": ["regal_blue_tang", "california_sheephead", "common_coral_trout", "piranha", "green_moray", "clownfish", "atlantic_mackerel", "parrotfish", "atlantic_tuna"]
 }

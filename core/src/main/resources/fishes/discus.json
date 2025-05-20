@@ -1,0 +1,9 @@
+{
+  "description": "For good reason, this fish has earned the name of discus with its relatively flat, rounded body. Large, prominent fins protrude dorsally and on the rear of the fish. The discus is classified according to coloration: blue, red, or green. However, there are multitudes of unique patterns.",
+  "notableFeatures": "The Discus has remarkable Color-changing abilities based on age, mood, environmental conditions, and stress levels and feeds its young by secreting a milk like substance through its scales.",
+  "minSize": 15,
+  "maxSize": 15,
+  "waterTypes": ["fresh"],
+  "waterSubtypes": ["river"],
+  "waterTemperatures": ["warm"]
+}

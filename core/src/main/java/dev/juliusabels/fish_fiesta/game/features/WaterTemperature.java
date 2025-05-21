@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents the temperature classifications of water environments.
+ */
 @Slf4j
 public enum WaterTemperature {
     COLD,
@@ -12,7 +15,14 @@ public enum WaterTemperature {
     WARM;
 
     /**
-     * Tries to map a list of strings to a list of WaterTemperature values. Invalid strings will be ignored, but logged!
+     * Converts a list of strings to water temperature enums, ignoring invalid values.
+     * <p>
+     * This method attempts to parse each string into a WaterTemperature enum constant.
+     * If a string doesn't match any valid temperature, it's logged as a warning and excluded
+     * from the result list.
+     *
+     * @param values List of strings to convert to WaterTemperature values
+     * @return List of successfully parsed WaterTemperature values
      */
     public static List<WaterTemperature> mapFromStrings(List<String> values) {
         return values.stream()

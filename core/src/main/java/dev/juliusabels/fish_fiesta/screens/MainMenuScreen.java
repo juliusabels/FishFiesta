@@ -9,23 +9,47 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.juliusabels.fish_fiesta.FishFiestaGame;
 import dev.juliusabels.fish_fiesta.screens.level.LevelSelectionScreen;
 import dev.juliusabels.fish_fiesta.util.FishFontBig;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Represents the main menu screen of the game.
+ * <p>
+ * This screen provides the initial navigation options for the player after loading completes.
+ * It displays two main buttons:
+ * <ul>
+ *   <li>Play: Transitions to the level selection screen</li>
+ *   <li>Quit: Exits the application</li>
+ * </ul>
+ * <p>
+ * In the future this screen would also hold a button to the credits screen
+ */
+@Slf4j
 public class MainMenuScreen extends FFBaseScreen {
-    private final SpriteBatch batch;
+
+    /** Large fish-themed font used for menu text */
     private final FishFontBig font;
 
+    /**
+     * Creates a new main menu screen.
+     *
+     * @param game The main game instance
+     */
     public MainMenuScreen(FishFiestaGame game) {
         super(game);
         font = new FishFontBig(game);
-        batch = new SpriteBatch();
     }
 
+    /**
+     * Sets up the main menu UI when the screen becomes active.
+     * <p>
+     * Creates and positions the Play and Quit buttons with appropriate
+     * styling and click listeners.
+     */
     @Override
     public void show() {
         super.show();
         Table buttons = new Table();
 
-        // Create button style based on big fish font
         TextButton.TextButtonStyle style = font.createButtonStyle(
             this.monitorSkin.getDrawable("menu_button"),
             this.monitorSkin.getDrawable("menu_button-pressed"),
@@ -33,7 +57,7 @@ public class MainMenuScreen extends FFBaseScreen {
             4.0F
         );
 
-        // Create the button with uppercase text
+        // Create and configure Play button
         TextButton playButton = font.createButton("Play", style);
         playButton.getLabelCell().padBottom(5F);
         playButton.addListener(new ClickListener() {
@@ -44,8 +68,9 @@ public class MainMenuScreen extends FFBaseScreen {
         });
         buttons.add(playButton).top().pad(10).fillX();
 
-        buttons.row().pad(40); // Add spacing between rows
+        buttons.row().pad(40);
 
+        // Create and configure Quit button
         TextButton quitButton = font.createButton("Quit", style);
         quitButton.getLabelCell().padBottom(5F);
         quitButton.addListener(new ClickListener() {
@@ -60,11 +85,9 @@ public class MainMenuScreen extends FFBaseScreen {
         this.contentTable.add(buttons).center().padBottom(40F).expand();
     }
 
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-    }
-
+    /**
+     * Disposes of resources when the screen is no longer needed.
+     */
     @Override
     public void dispose() {
         super.dispose();

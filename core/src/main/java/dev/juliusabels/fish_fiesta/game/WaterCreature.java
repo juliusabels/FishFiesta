@@ -7,20 +7,35 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Represents a water creature (fish) in this game.
+ * <p>
+ * This class stores all the relevant data about water creatures including their
+ * name, description, notable features, size, and water environment preferences.
+ * Each water creature can be identified by a unique ID derived from its name.
+ */
 @Getter
 @AllArgsConstructor
 public class WaterCreature {
+    /** The display name of the water creature */
     private String name;
-    private String description;
-    private String notableFeatures;
-    private CreatureSize size;
-    private List<WaterType> waterTypes;
-    private List<WaterSubtype> waterSubtypes;
-    private List<WaterTemperature> waterTemperatures;
 
-    public String getID() {
-        return name.replace(" ", "_").toLowerCase();
-    }
+    /** Detailed description of the water creature */
+    private String description;
+
+    /** Specific notable features of the water creature */
+    private String notableFeatures;
+
+    /** Size classification of the water creature */
+    private CreatureSize size;
+
+    /** List of water types this creature can live in (max. 2) */
+    private List<WaterType> waterTypes;
+
+    /** List of water subtypes this creature can live in */
+    private List<WaterSubtype> waterSubtypes;
+
+    /** List of water temperatures this creature can live in (max. 3) */
+    private List<WaterTemperature> waterTemperatures;
 }

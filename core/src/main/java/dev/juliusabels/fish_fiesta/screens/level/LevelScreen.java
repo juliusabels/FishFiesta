@@ -262,7 +262,8 @@ public class LevelScreen extends FFBaseScreen {
         exitDialog.dispose();
         basicTextFont.dispose();
         fishFontBig.dispose();
-        levelManager.setActivelevel(null);
+        levelManager.setActiveLevel(null);
         journal.dispose();
+        tooltipHandler.dispose();
     }
 }

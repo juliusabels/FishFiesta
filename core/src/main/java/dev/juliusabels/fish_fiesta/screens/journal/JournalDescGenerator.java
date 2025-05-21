@@ -8,49 +8,100 @@ import dev.juliusabels.fish_fiesta.game.features.WaterType;
 
 import java.util.List;
 
+/**
+ * Generates detailed descriptions for fishes in the journal.
+ * <p>
+ * This utility class automatically creates readable, informative descriptions
+ * by combining the creature's basic description with formatted details about:
+ * <ul>
+ *   <li>Size and classification</li>
+ *   <li>Water type preferences (salt or fresh water)</li>
+ *   <li>Habitats (subtypes of water environments)</li>
+ *   <li>Temperature preferences</li>
+ * </ul>
+ * <p>
+ * The descriptions are dynamically generated based on the available data for each creature,
+ * ensuring consistent formatting and natural-sounding text.
+ */
 public class JournalDescGenerator {
 
+    /**
+     * Generates a formatted description for the specified water creature.
+     *
+     * @param waterCreature The water creature to generate a description for
+     * @return A complete, formatted description string
+     */
     public static String generateFor(WaterCreature waterCreature) {
         StringBuilder buffer = new StringBuilder();
+
+        // Start with the basic description
         buffer.append(waterCreature.getDescription()).append(" ");
-        CreatureSize size = waterCreature.getSize();
-        List<WaterType> waterTypes = waterCreature.getWaterTypes();
-        List<WaterSubtype> waterSubtypes = waterCreature.getWaterSubtypes();
-        List<WaterTemperature> waterTemperatures = waterCreature.getWaterTemperatures();
 
-        if (size.isValid()) {
-            if (size.rangeStart() == size.rangeEnd()) {
-                buffer.append("It's around ")
-                    .append(size.rangeStart())
-                    .append("cm large, making it a ")
-                    .append(size.getCategoriesFromSize().getFormattedForDesc())
-                    .append(" fish. ");
-            } else {
-                buffer.append("It's size ranges from ")
-                    .append(size.rangeStart())
-                    .append(" cm to ")
-                    .append(size.rangeEnd())
-                    .append(" cm, making it a ")
-                    .append(size.getCategoriesFromSize().getFormattedForDesc())
-                    .append(" fish. ");
-            }
+        // Add size information
+        appendSizeDescription(buffer, waterCreature.getSize());
+
+        // Add water type and habitat information
+        appendWaterTypeDescription(buffer, waterCreature);
+
+        // Add temperature preference information
+        appendTemperatureDescription(buffer, waterCreature.getName(), waterCreature.getWaterTemperatures());
+
+        return buffer.toString();
+    }
+
+    /**
+     * Appends size information to the description.
+     *
+     * @param buffer The string builder to append to
+     * @param size The creature's size information
+     */
+    private static void appendSizeDescription(StringBuilder buffer, CreatureSize size) {
+        if (!size.isValid()) {
+            return;
         }
 
-        if (!waterTypes.isEmpty()) {
-            buffer.append("The ").append(waterCreature.getName().toLowerCase()).append(" can be found in ");
+        if (size.rangeStart() == size.rangeEnd()) {
+            buffer.append("It's around ")
+                .append(size.rangeStart())
+                .append("cm large, making it a ")
+                .append(size.getCategory().getFormattedForDesc())
+                .append(" fish. ");
+        } else {
+            buffer.append("It's size ranges from ")
+                .append(size.rangeStart())
+                .append(" cm to ")
+                .append(size.rangeEnd())
+                .append(" cm, making it a ")
+                .append(size.getCategory().getFormattedForDesc())
+                .append(" fish. ");
+        }
+    }
 
-            if (waterTypes.size() == 1) {
-                buffer.append(waterTypes.getFirst().toString().toLowerCase())
-                    .append(" water ");
-            } else {
-                buffer.append("both ")
-                    .append(waterTypes.get(0).toString().toLowerCase())
-                    .append(" and ")
-                    .append(waterTypes.get(1).toString().toLowerCase())
-                    .append(" water ");
-            }
+    /**
+     * Appends water type and habitat information to the description.
+     *
+     * @param buffer The string builder to append to
+     * @param creature The water creature with type and subtype data
+     */
+    private static void appendWaterTypeDescription(StringBuilder buffer, WaterCreature creature) {
+        List<WaterType> waterTypes = creature.getWaterTypes();
+        List<WaterSubtype> waterSubtypes = creature.getWaterSubtypes();
+
+        // Skip if no water type data
+        if (waterTypes.isEmpty()) {
+            return;
         }
 
+        // Add water type information
+        buffer.append("The ").append(creature.getName().toLowerCase()).append(" can be found in ");
+
+        if (waterTypes.size() == 1) {
+            buffer.append(waterTypes.getFirst().toString().toLowerCase()).append(" water ");
+        } else {
+            buffer.append("both fresh and salt water ");
+        }
+
+        // Add water subtype information if available
         if (!waterSubtypes.isEmpty()) {
             buffer.append("and it typically inhabits ");
             int listSize = waterSubtypes.size();
@@ -71,29 +122,38 @@ public class JournalDescGenerator {
                 buffer.append(". ");
             }
         }
+    }
 
-        if (!waterTemperatures.isEmpty()) {
-            buffer.append("In addition this fish ");
-            int tempSize = waterTemperatures.size();
-
-            if (tempSize == 3) {
-                buffer.append("enjoys any type of water temperature. ");
-            } else {
-                buffer.append("prefers ");
-
-                if (tempSize == 1) {
-                    buffer.append(waterTemperatures.getFirst().toString().toLowerCase())
-                        .append(" waters. ");
-                } else { // tempSize == 2
-                    buffer.append("both ")
-                        .append(waterTemperatures.get(0).toString().toLowerCase())
-                        .append(" and ")
-                        .append(waterTemperatures.get(1).toString().toLowerCase())
-                        .append(" waters. ");
-                }
-            }
+    /**
+     * Appends temperature preference information to the description.
+     *
+     * @param buffer The string builder to append to
+     * @param fishName The name of the fish for reference
+     * @param temperatures The list of temperature preferences
+     */
+    private static void appendTemperatureDescription(StringBuilder buffer, String fishName,
+                                                     List<WaterTemperature> temperatures) {
+        if (temperatures.isEmpty()) {
+            return;
         }
 
-        return buffer.toString();
+        buffer.append("In addition this fish ");
+        int tempSize = temperatures.size();
+
+        if (tempSize == 3) {
+            buffer.append("enjoys any type of water temperature. ");
+        } else {
+            buffer.append("prefers ");
+
+            if (tempSize == 1) {
+                buffer.append(temperatures.getFirst().toString().toLowerCase())
+                    .append(" water temperatures. ");
+            } else {
+                buffer.append(temperatures.get(0).toString().toLowerCase())
+                    .append(" and ")
+                    .append(temperatures.get(1).toString().toLowerCase())
+                    .append(" water temperatures. ");
+            }
+        }
     }
 }

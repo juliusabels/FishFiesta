@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -108,6 +109,13 @@ public class ResourceHandler {
      */
     public TextureAtlas getFishSprites() {
         return assetManager.get(FISH_SPRITES);
+    }
+
+    /**
+     * @return the fish texture for the corresponding fishId
+     */
+    public TextureRegion getFishTexture(String fishId) {
+        return this.getFishSprites().findRegion(fishId);
     }
 
     /**

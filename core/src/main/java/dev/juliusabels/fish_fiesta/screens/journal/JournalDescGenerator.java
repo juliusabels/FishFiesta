@@ -42,9 +42,7 @@ public class JournalDescGenerator {
 
         // Add water type and habitat information
         appendWaterTypeDescription(buffer, waterCreature);
-
-        // Add temperature preference information
-        appendTemperatureDescription(buffer, waterCreature.getName(), waterCreature.getWaterTemperatures());
+        appendTemperatureDescription(buffer, waterCreature.getWaterTemperatures());
 
         return buffer.toString();
     }
@@ -128,10 +126,9 @@ public class JournalDescGenerator {
      * Appends temperature preference information to the description.
      *
      * @param buffer The string builder to append to
-     * @param fishName The name of the fish for reference
      * @param temperatures The list of temperature preferences
      */
-    private static void appendTemperatureDescription(StringBuilder buffer, String fishName,
+    private static void appendTemperatureDescription(StringBuilder buffer,
                                                      List<WaterTemperature> temperatures) {
         if (temperatures.isEmpty()) {
             return;

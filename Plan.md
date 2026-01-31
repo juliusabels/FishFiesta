@@ -16,6 +16,8 @@ Quellen:
 - Fish cam niderlande ref
 - libgdx
 
+Maybe in the future the game could be rebuilt with poly fish models: https://poly.pizza/search/fish
+
 Planned additions:
 - Won & Loose Screen & Sound
 - I changed the contentTable padding, check if level selection still works with >41 levels

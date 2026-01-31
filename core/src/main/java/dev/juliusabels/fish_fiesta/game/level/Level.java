@@ -74,7 +74,8 @@ public class Level {
      */
     public boolean meetsConditions(WaterCreature creature) {
         return conditions.entrySet().stream()
-            .allMatch(entry -> entry.getKey().isSatisfied(creature, entry.getValue()));
+            .allMatch(entry -> entry.getKey()
+                .isSatisfied(creature, entry.getValue()));
     }
 
     /**
